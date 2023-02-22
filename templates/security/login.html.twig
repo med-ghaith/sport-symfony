@@ -1,0 +1,34 @@
+{% extends 'front.base.html.twig' %}
+
+{% block title %}registration{% endblock %}
+
+{% block body %}
+    <section class="page-heading">
+        <div class="title-slide">
+            <div class="container">
+                <div class="banner-content slide-container">
+                    <div class="page-title">
+                        <h3>Connexion</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="page-content">
+        <div class="breadcrumbs">
+            <div class="container">
+                <form action="{{ path('security_login') }}" method="post" >
+                    <div class="form-group">
+                        <input placeholder="Email address..." type="text" required name="_username" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <input placeholder="Password..." type="password" required name="_password" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" style="background-color: #65cd33; border-radius: 10px">Login</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<title>Product list</title>
+
+
+<h1>Products</h1>
+
+<table class="table" border="1">
+	<thead>
+		<tr></tr>
+		<tr>
+			<th scope="col">ID</th>
+			<th scope="col">Description</th>
+			<th scope="col">Name</th>
+
+			<th scope="col">Prix</th>
+
+			<th scope="col">image
+			</th>
+		</tr>
+	</thead>
+</tr></thead>{% for item in reclamation %}
+<tr>
+
+	<th scope="row">{{item.id}}</th>
+    <td>{{item.typeReclamation}}</td>
+	<td>{{item.description}}</td>
+	<td>{{item.status}}</td>
+	<td>{{item.reclamationDate}}</td>
+    
+
+</tr>{% else %}
+<tr>
+	<td colspan="5">no records found</td>
+</tr>{% endfor %}</tbody></table>

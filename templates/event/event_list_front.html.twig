@@ -1,0 +1,154 @@
+{% extends 'front.base.html.twig' %}
+{% block body %}
+
+    <section class="page page-product">
+        <section class="page-heading">
+            <div class="title-slide">
+                <div class="container">
+                    <div class="banner-content">
+                        <div class="page-title">
+                            <h3>Event listing</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="page-content">
+
+            <div class="breadcrumbs">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-9">
+                            <ul>
+                                <li class="home"><a href="#"><i class="fa fa-home"></i> Home</a></li>
+                                <li><span>//</span></li>
+                                <li class="category-2"><a href="#">Listing row</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-list-row">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-9">
+                            <div class="toolbar">
+                                <p class="amount">
+                                    <strong>SHOWING ALL {{events|length}} RESULTS</strong>
+                                    <button style="background-color: orange ; margin-left: 100px">  <a href={{ path('new_event') }}>Create new</a></button>
+
+                                </p>
+                                    <div class="sorter">
+
+
+                                        <p class="view-mode">
+                                        <a class="grid" title="Grid" href={{path('event_index_grid')}}><i class="fa fa-th-large"></i></a>
+                                        <strong class="list-active" title="List"><i class="fa fa-th-list"></i></strong>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="row" id="myTable">
+                                {% for event in events %}
+
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="product-image-wrapper">
+                                            <div class="product-content">
+                                                <div class="product-image col-md-4 col-sm-4 col-xs-12">
+                                                    <a href={{ path('event_show_front', {'id': event.id}) }}><img alt="" src={{ event.imageUrl }}></a>
+
+                                                </div>
+
+                                                <div class="info-products-list col-md-8 col-sm-8 col-xs-12">
+
+                                                    <div class="product-name">
+                                                        <a href="product-detail.html">Category:  {{event.category}}</a>
+                                                    </div>
+
+                                                    <hr />
+                                                    <div class="desc">Description:  {{event.description}}</div>
+                                                    <hr />
+
+                                                    <div class="price-box">
+                                                        <span class="special-price">Inscription Fees in DT:  {{event.fees}}</span>
+                                                    </div>
+
+                                                    <div class="actions-box">
+                                                        <ul>
+                                                            <li><a href={{ path('event_show_front', {'id': event.id}) }}><i class="fa fa-info"></i></a></li>
+                                                            <li><a href={{ path('event_edit_front', {'id': event.id}) }}><i class="fa fa-edit"></i></a></li>
+                                                        </ul>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+
+                            <div class="clearfix"></div>
+                            <div class="pages">
+
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="product-filter">
+                                <div class="widget widget-price-filter">
+                                    <form name="" method="post" id="send-search" >
+                                        <div class="email">
+                                            <input type="text" name="recherche" class="custom-file-input" placeholder="Search" id="myInput">
+                                            <button class="button" type="submit" value="recherche"><i class="fa fa-search" ></i></button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div class="product-categories">
+                                <form method="post" class="forms-sample"  action="{{ path('filter') }}">
+                                    <div style="display: block; ">
+
+
+                                        <div class="form-check" style="display: block">
+                                            <label class="form-check-label" >
+                                                <input style="border: solid #00d25b;" type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="NameEvent"> Name event </label>
+                                        </div>
+
+
+                                        <div class="form-check" style="display: block">
+                                            <label class="form-check-label" >
+                                                <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2" value="PriceEvent" > Price event </label>
+                                        </div>
+
+
+                                        <div class="form-check" style="display: block">
+                                            <label class="form-check-label" >
+                                                <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios3" value="NbParticipants" > Participants number </label>
+                                        </div>
+
+                                        <button type="Submit"  style="margin: auto; background-color: red" >Filter</button>
+                                    </div>
+                                </form>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script >
+        $(document).ready(function(){
+        $("#myInput").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            //console.log(value);
+            $("#myTable .product-content").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
+{% endblock %}

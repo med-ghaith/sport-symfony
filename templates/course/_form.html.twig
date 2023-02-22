@@ -1,0 +1,50 @@
+{% block body %}
+<section class="form-comment">
+<div class="form-comment-title">
+</div>
+<form id="form-comment" class="form-validate" method="post">
+<div class="form-validate-left">
+<div class="name">
+{{form_start(form, {'attr':{'novalidate':'novalidate'}})}}
+{{ form_errors(form.name) }}
+<input type="text" placeholder="Nom du cours" id="{{ form.name.vars.id }}" name="{{ form.name.vars.full_name }}" 
+ value="{{ form.name.vars.value }}" >
+{% do form.name.setRendered %}
+</div>
+<div class="url">
+{{ form_errors(form.video) }}
+<input type="file"
+       class="filestyle"
+       data-buttonText="Select a File"
+       accept=".mp4"  
+       id="{{ form.video.vars.id }}" name="{{ form.video.vars.full_name }}" 
+       value="{{ form.video.vars.value }}" >
+{% do form.video.setRendered %}
+</div>
+</div>
+<div class="form-validate-right">
+<div class="message">
+{{ form_errors(form.description) }}
+<textarea placeholder="Description" rows="8" class="control" id="{{ form.description.vars.id }}" name="{{ form.description.vars.full_name }}" 
+ value="{{ form.description.vars.value }}"
+>{{ form.description.vars.value }}</textarea>
+{% do form.description.setRendered %}
+</div>
+<div class="form-submit">
+<input type="submit" class="btn-submit" id="{{ form.save.vars.id }}" name="{{ form.save.vars.full_name }}" 
+ value="Enregistrer">
+ {% do form.save.setRendered %}
+{{form_end(form)}}
+</div>
+</div>
+</form>
+
+</section>
+</div>
+</section>
+
+<a class="profile" href={{ path('gym_show', {'id':id}) }}>Profile</a>
+</br>
+<a href="{{ path('coursegym',{'id': id}) }}">back to list</a>
+
+{% endblock %}

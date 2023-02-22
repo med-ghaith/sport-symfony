@@ -1,0 +1,39 @@
+{% extends 'back.base.html.twig' %}
+{% use "bootstrap_4_layout.html.twig" %}
+{% block title %}Blogs {% endblock %}
+
+{% block body %}
+<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+  {% for blog in blogs %}
+    <div class="col-md-8 mt-4">
+      <div class="card">
+        <div class="card-header pb-0 px-3">
+          <h6 class="mb-0">Blogs</h6>
+        </div>
+        <div class="card-body pt-4 p-3">
+          <ul class="list-group">
+            
+            <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg">
+                <div class="d-flex flex-column">
+                <img class="card-img-top" src="{{asset('uploads/image/') ~ blog.image}}" alt="Card image cap" height="200px" width="100px">
+                <h6 class="mb-3 text-sm mt-4">Author: <span class="text-dark ms-sm-2 font-weight-bold">{{blog.user.firstName}}</span></h6>
+                <span class="mb-2 text-xs">Blog Title: <span class="text-dark font-weight-bold ms-sm-2">{{blog.title}}</span></span>
+                <span class="mb-2 text-xs">Category: <span class="text-dark ms-sm-2 font-weight-bold">{{blog.blogCat.name}}</span></span>
+                <span class="text-xs">Description: <span class="text-dark ms-sm-2 font-weight-bold">{{blog.description}}</span></span>
+                <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="{{ path('deleteB', {id: blog.id}) }}"><i class="material-icons text-sm me-2">delete</i>Delete</a>
+                 {% if blog.getVerified() != true %}
+                <a class="btn btn-link text-dark px-3 mb-0" href="{{ path('blog-validate', {id: blog.id}) }}"><i class="material-icons text-sm me-2">edit</i>Validate</a>
+                {% endif %}
+              </div>
+              <div class="ms-auto text-end">
+                
+              </div>
+            </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+{% endblock %}

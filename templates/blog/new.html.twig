@@ -1,0 +1,26 @@
+{% extends 'front.base.html.twig' %}
+
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+{% block title %}New Blog{% endblock %}
+
+
+{% block body %}
+<section class="page-heading">
+    <div class="title-slide">
+    <div class="container">
+    <div class="banner-content slide-container">
+    <div class="page-title">
+    <h3>Our Blog</h3>
+    </div>
+    </div>
+    </div>
+    </div>
+    </section>
+   
+
+    {{ include('blog/_form.html.twig') }}
+    
+
+    <a href="{{ path('blog_index') }}">back to list</a>
+{% endblock %}

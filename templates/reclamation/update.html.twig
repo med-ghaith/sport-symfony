@@ -1,0 +1,14 @@
+{% extends 'front.base.html.twig' %}
+
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+{% block title %}Reclamation{% endblock %}
+
+
+{% block body %}
+<div style="margin-top:130px;"  class="mt-150">
+    <h2>Update Reclamation</h2>
+{{ form(form) }}
+</div>
+
+{% endblock %}

@@ -1,0 +1,138 @@
+{% extends 'front.base.html.twig' %}
+{% block body %}
+
+<section class="page page-product">
+<section class="page-heading">
+<div class="title-slide">
+<div class="container">
+<div class="banner-content">
+<div class="page-title">
+<h3>Gym listing</h3>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<div class="page-content">
+
+<div class="breadcrumbs">
+<div class="container">
+<div class="row">
+<div class="col-md-9">
+<ul>
+<li class="home"><a href="#"><i class="fa fa-home"></i> Home</a></li>
+<li><span>//</span></li>
+<li class="category-2"><a href="#">Listing row</a></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+<div class="product-list-row">
+<div class="container">
+<div class="row">
+<div class="col-md-9">
+<div class="toolbar">
+<p class="amount">
+<strong>SHOWING ALL {{gyms|length}} RESULTS</strong>
+</p>
+<div class="sorter">
+<div class="sort-by">
+<select onchange="setLocation(this.value)">
+<option selected="selected" value="">Default sorting</option>
+<option value="">Position</option>
+<option value="">Name</option>
+<option value="">Price</option>
+</select>
+</div>
+<p class="view-mode">
+<a class="grid" title="Grid" href={{path('gym_index')}}><i class="fa fa-th-large"></i></a>
+<strong class="list-active" title="List"><i class="fa fa-th-list"></i></strong>
+</p>
+</div>
+</div>
+
+<div class="row">
+{% for gym in gyms %}
+
+<div class="col-md-12 col-sm-12 col-xs-12">
+<div class="product-image-wrapper">
+<div class="product-content">
+<div class="product-image col-md-4 col-sm-4 col-xs-12">
+<a href={{ path('gym_show', {'id': gym.id}) }}><img alt="" src={{ asset("front/assets/images/gestionsalle/california.png")}}></a>
+
+</div>
+
+<div class="info-products-list col-md-8 col-sm-8 col-xs-12">
+
+<div class="product-name">
+<a href={{ path('gym_show', {'id': gym.id}) }}>{{gym.name}}</a>
+</div>
+
+<hr />
+<div class="desc">{{gym.description|slice(0,300)}}...</div>
+<hr />
+
+<div class="price-box">
+<span class="special-price">{{gym.location}}</span>
+</div>
+
+<div class="actions-box">
+<ul>
+<li><a href={{ path('gym_show', {'id': gym.id}) }}><i class="fa fa-info"></i></a></li>
+<li><a href={{ path('gym_show', {'id': gym.id}) }}><i class="fa fa-search"></i></a></li>
+<li><a href="#"><i class="fa fa-star"></i></a></li>
+</ul>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+{% endfor %}
+</div>
+
+<div class="navigation">
+{{ knp_pagination_render(gyms) }}
+</div>
+
+<div class="clearfix"></div>
+<div class="pages">
+
+</div>
+</div>
+<div class="col-md-3">
+<div class="product-filter">
+<div class="widget widget-price-filter">
+<form name="" method="post" id="send-search">
+<div class="email">
+<input type="text" title="Search" name="search" class="custom-file-input" placeholder="Search">
+<button class="button" title="Submit" type="submit"><i class="fa fa-search" ></i></button>
+</div>
+</form>
+</div>
+</div>
+<div class="product-categories">
+<h3 class="title">Gym categories</h3>
+<ul>
+<li><a href="#">Boxing-MMA</a></li>
+<li><a href="#">Yoga and Pilates</a></li>
+<li><a href="#">Accessories</a></li>
+<li><a href="#">Indoor-Cycles</a></li>
+<li><a href="#">Cardio</a></li>
+<li><a href="#">X-Fit</a></li>
+</ul>
+</div>
+
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+    <a href="{{ path('gym_new') }}">Create new</a>
+    
+{% endblock %}

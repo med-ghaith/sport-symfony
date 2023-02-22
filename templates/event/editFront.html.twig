@@ -1,0 +1,9 @@
+{% extends 'front.base.html.twig' %}
+
+{% block body %}
+
+    {{ include('event/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <button style="background-color: orange">  <a href="{{ path('event_index_row') }}">Back to list</a> </button>
+
+{% endblock %}

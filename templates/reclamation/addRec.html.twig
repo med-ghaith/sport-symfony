@@ -1,0 +1,116 @@
+
+{% extends 'front.base.html.twig' %}
+{% use "bootstrap_4_layout.html.twig" %}
+{% block title %}Add Reclamation {% endblock %}
+
+
+
+
+
+{% block body %}
+
+<link rel="stylesheet" type="text/css" href={{asset("front/assets/css/rec.css")}}>
+<link rel="stylesheet" type="text/css" href={{asset("front/assets/css/rec_responsive.css")}}>
+<!-- Home -->
+<div class="container">
+	<div class="home">
+		<div class="background_image" style="background-image:url({{asset("front/assets/images/contact.jpg")}})"></div>
+		<div class="overlay"></div>
+		<div class="home_container">
+			<div class="container">
+				<div class="row">
+					<div class="col">
+						<div class="home_content">
+							<div class="home_title">Reclamation</div>
+							<div class="home_subtitle">Pilates, Yoga, Fitness, Spinning & many more</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Contact -->
+
+	<div class="contact">
+		<div class="container">
+			<div class="row">
+
+				<!-- Contact Content -->
+				<div class="col-lg-4">
+					<div class="contact_content">
+						<div class="contact_logo">
+							<div class="logo d-flex flex-row align-items-center justify-content-start"><img src={{asset("front/assets/images/dot.png")}} alt=""><div>Sports<span>hub</span></div></div>
+						</div>
+						<div class="contact_text">
+							<p>Feel free to send any complaint</p>
+						</div>
+						<div class="contact_list">
+							<ul>
+								<li class="d-flex flex-row align-items-start justify-content-start">
+									<div><div>A:</div></div>
+									<div>Ghazella, ariana Tunis 931</div>
+								</li>
+								<li class="d-flex flex-row align-items-start justify-content-start">
+									<div><div>P:</div></div>
+									<div>+53 345 7953 32453</div>
+								</li>
+								<li class="d-flex flex-row align-items-start justify-content-start">
+									<div><div>M:</div></div>
+									<div>sportshub@gmail.com</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+
+				<!-- Contact Form -->
+				<div class="col-lg-8 contact_col">
+					<div class="contact_title">Add Reclamation</div>
+					<div class="contact_form_container">
+						{{ form_start(form,{'attr': {'novalidate': 'novalidate'}} ) }}
+                        {{ form_errors(form) }}
+							<div class="row">
+								<div class="col-lg-6">
+                                    {{ form_label(form.object,"Object") }}
+									<div class="input_item">{{ form_widget(form.object) }}</div>
+								</div>
+								<div class="col-lg-6">
+                                    {{ form_label(form.typeReclamation,"Reclamation Type") }}
+									<div class="input_item">{{ form_widget(form.typeReclamation) }}</div>
+								</div>
+							</div>
+							<div class="col-lg-6 ">
+                            {{ form_label(form.description,"Description") }}
+							<div class="input_item">{{ form_widget(form.description) }}</div>
+							
+                            <div class="col-lg-6 ">
+								
+								<div class="input_item">{{ form_row(form.captcha) }}</div>
+								{{ form_row(form.Add, {'label':'Send','attr':{ 'class': 'contact_button button' }}) }}
+							</div>
+                            
+							
+                            {{ form_end(form) }}
+					</div>
+				</div>
+
+			</div>
+			
+		</div>
+	</div>
+</div>
+
+    <script src={{asset("front/assets/plugins/greensock/TweenMax.min.js")}}></script>
+<script src={{asset("front/assets/plugins/greensock/TimelineMax.min.js")}}></script>
+<script src={{asset("front/assets/plugins/scrollmagic/ScrollMagic.min.js")}}></script>
+<script src={{asset("front/assets/plugins/greensock/animation.gsap.min.js")}}></script>
+<script src={{asset("front/assets/plugins/greensock/ScrollToPlugin.min.js")}}></script>
+<script src={{asset("front/assets/plugins/easing/easing.js")}}></script>
+<script src={{asset("front/assets/plugins/parallax-js-master/parallax.min.js")}}></script>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyCIwF204lFZg1y4kPSIhKaHEXMLYxxuMhA"></script>
+<script src={{asset("front/assets/js/contact.js")}}></script>
+
+    {% endblock %}
+
+   

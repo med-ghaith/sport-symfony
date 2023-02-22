@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="UTF-8">
+    <title>{%block title%}
+            Welcome!
+        {%endblock%}</title>
+    {# Run `composer require symfony/webpack-encore-bundle`
+           and uncomment the following Encore helpers to start using Symfony UX #}
+    {% block stylesheets %}
+        {# {{ encore_entry_link_tags('app') }} #}
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+        <meta name="author" content="">
+        <meta name="keywords" content="">
+        <meta name="description" content="">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+
+        <link rel="stylesheet" href={{ asset("front/assets/css/font-awesome.css") }} type="text/css">
+        <link rel="stylesheet" href={{ asset("front/assets/css/style.css") }} type="text/css">
+        <link rel="stylesheet" href={{ asset("front/assets/css/bootstrap.css") }} type="text/css">
+
+        <!--[if !IE 9]><!-->
+        <link rel="stylesheet" href={{ asset("front/assets/css/effect.css") }} type="text/css">
+        <link rel="stylesheet" href={{ asset("front/assets/css/animation.css") }} type="text/css">
+        <!--<![endif]-->
+        <link rel="stylesheet" href={{ asset("front/assets/css/masterslider.css") }} type="text/css">
+        <link rel="stylesheet" href={{ asset("front/assets/css/ms-fullscreen.css") }} type="text/css">
+        <link rel="stylesheet" type="text/css" media="all" href={{ asset("front/assets/css/owl.carousel.css") }}>
+        <link rel="stylesheet" type="text/css" media="all" href={{ asset("front/assets/css/owl.transitions.css") }}>
+
+
+        <link rel="stylesheet" href={{ asset("front/assets/css/color.css") }} type="text/css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.3.0/main.min.css" integrity="sha256-uq9PNlMzB+1h01Ij9cx7zeE2OR2pLAfRw3uUUOOPKdA=" crossorigin="anonymous">
+        <link rel="stylesheet" href="{{ asset('bundles/mercuryseriesflashy/css/flashy.css') }}">
+
+    {% endblock %}
+
+    {% block javascripts %}
+        {# {{ encore_entry_script_tags('app') }} #}
+        <script data-cfasync="false" src={{ asset("front/assets/cloudflare-static/email-decode.min.js") }}></script><script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
+        <script type="text/javascript" src={{ asset("front/assets/js/jquery-2.1.0.min.js") }}></script>
+        <script type="text/javascript" src={{ asset("front/assets/js/bootstrap.min.js") }}></script>
+        <script type="text/javascript" src={{ asset("front/assets/js/jquery.easing.1.3.js") }}></script>
+        <script type="text/javascript" src={{ asset("front/assets/js/parallax/jquery.parallax-1.1.3.js") }}></script>
+        <script type="text/javascript" src={{ asset("front/assets/js/parallax/jquery.transform2d.js") }}></script>
+        <script type="text/javascript" src={{ asset("front/assets/js/parallax/script.js") }}></script>
+        <script type="text/javascript" src={{ asset("front/assets/js/parallax/parallax.js") }}></script>
+        <script type="text/javascript" src={{ asset("front/assets/js/masterslider.min.js") }}></script>
+        <script type="text/javascript" src={{ asset("front/assets/js/banner.js") }}></script>
+        <script type="text/javascript" src={{ asset("front/assets/js/home.map.js") }}></script>
+        <script type="text/javascript" src={{ asset("front/assets/js/waypoints.js") }}></script>
+        <script type="text/javascript" src={{ asset("front/assets/js/template.js") }}></script>
+        <script type="text/javascript" src={{ asset("front/assets/js/dropdown.js") }}></script>
+        <script type="text/javascript" src={{ asset("front/assets/js/owl.carousel.min.js") }}></script>
+        <script type="text/javascript" src={{ asset("front/assets/js/theme.js") }}></script>
+        <script type="text/javascript" src={{ asset("front/assets/js/classie.js") }}></script>
+        <script type="text/javascript" src={{ asset("front/assets/js/main.js") }}></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.3.0/main.min.js" integrity="sha256-DBxkGZLxKsLKhz054qUpBqtotG00r9AELGpSigJujLg=" crossorigin="anonymous"></script>
+        <script src="//code.jquery.com/jquery.js"></script>
+        <script src="{{ asset('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
+    {% endblock %}
+</head>
+<body>
+<div class="super_container">
+
+    {{ include('@MercurySeriesFlashy/flashy.html.twig') }}
+    {{ include('includes/header.html.twig') }}
+    {% block body %}
+
+    {% endblock %}
+
+
+</div>
+
+</body>
+</html>

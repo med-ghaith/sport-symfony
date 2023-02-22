@@ -1,0 +1,211 @@
+{% extends 'front.base.html.twig' %}
+{% block body %}
+
+    {% block style %}
+
+
+
+
+        <style>
+            form{
+                margin-top: 60px;
+                margin-right: 100px;
+            }
+            *{
+                padding: 0;
+                margin: 0;
+                box-sizing: border-box;
+            }
+            body{
+                background-color: rgb(219,226,226);
+                border-radius: 30px;
+                background-color: white;
+            }
+            .row{
+            }
+            .button{
+                margin-left: 350px;
+                margin-top: 60px;
+                margin-bottom: 30px;
+            }
+            .rounded{
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                padding: 5px;
+                width: 1000px;
+                margin-left: 180px;
+                margin-top: 60px;
+            }
+            .rating{
+                margin-left: 180px;
+            }
+            .rounded:hover {
+                box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+            }
+            photo{
+                border-top-left-radius:30px;
+                border-bottom: 30px;
+                width: 1200px;
+                height: 2000px;
+            }
+            .classform{
+                padding: 80px;
+                border: 1px solid black;
+            }
+        </style>
+    {% endblock %}
+
+    <body >
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css">
+    <div >
+        <section class="form my-4 mx-5">
+            <div class="container">
+
+                <div  class="row no-gutters">
+                    <div class="col-lg-5">
+
+                        <img src="{{ asset('uploads/image/'~blog.image) }}" alt="  {{ blog.image }}" style="height: 250px;width: 270px;margin-bottom: +10%" class="rounded" alt="Cinque Terre" >
+
+                        <div class="col-lg-5">
+                            <div class="rating">
+
+                                {{form_start(noteform)}}
+                                <div>
+                                    {{form_widget(noteform.nom , {'value':blog.title ,'type':'hidden'})}}
+
+                                </div>
+
+                                {% set somme = 0 %}
+                                {% for rate in rates %}
+                                    {% set somme = (rate.rate / rates|length)+ somme %}
+                                {% endfor %}
+                                <div class="rateyo" id= "rating"
+                                     data-rateyo-rating={{somme}}
+                                     data-rateyo-num-stars="5"
+                                     data-rateyo-score="3">
+
+                                </div>
+                                <br>
+                                <style>
+                                    h5{
+                                        color:grey;
+                                    }
+                                </style>
+
+                                <h5>Raiting : {{somme|number_format(1, '.')}} /5</h5>
+
+                                {{form_widget(noteform.rate , { 'id': 'rating','type':'hidden'} ) }}
+                                <br>
+                                {{form_end(noteform)}}
+
+                                <br>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-lg-7" >
+
+
+                        <form class="classform">
+                            <div class="col-lg-7">
+                                <h5 class="text-danger" id="exampleModalCenterTitle">Nombre de Vue: {{ blog.view}}</h5>
+                            </div>
+                            <div class="col-lg-7">
+                                <h2 >Nom :  {{ blog.title }}</h2>
+                            </div>
+
+                            
+
+                            <div class="col-lg-7">
+                                <h3 class="text-danger" id="exampleModalCenterTitle">Description:{{ blog.description }}</h3>
+
+                            </div>
+
+
+                            <div class="col-lg-7">
+                                <h3  id="exampleModalCenterTitle" class="text-black">Date : {{ blog.createdAt | date ("m/d/Y")}}</h3>
+
+                            </div>
+
+                           
+
+
+                            
+
+
+                            <div class="author-content">
+                                
+
+                                <div class="bottom-item d-flex justify-content-between align-items-center">
+                                    <div id="fb-root"></div>
+
+                                    <div class="fb-share-button"
+                                         data-layout="button_count">
+                                    </div>
+
+                                </div>
+                            </div>
+                            <script>
+                               
+                                function hideButton(button){
+                                    button.disabled = true;
+                                    button.style.display = 'none' ;
+                                }
+                                function addOnClick(button,path){
+                                    button.addEventListener('click',function(blog){
+                                        hideButton(button);
+                                        $.ajax({
+                                            url : "{{ path('detailBlog',{'id': blog.id }) }}",
+                                            type : 'GET',
+                                            data: {
+                                                'id' : {{ blog.id }}
+                                            },
+                                            success : function(retour)
+                                            {
+                                                
+                                            },
+                                        });
+                                    });
+                                }
+                            </script>
+
+                            <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+                            <script>
+                                function onClickBtnLike(blog){
+                                    event.preventDefault();
+                                    const url=this.href;
+                                    const spanCount= this.querySelector('span.js-likes');
+                                    const icone=this.querySelector('i');
+                                    axios.get(url).then(function (response){
+                                        spanCount.textContent=response.data.likes;
+                                        if (icone.classList.contains('fas')) icone.classList.replace('fas','far');
+                                        else icone.classList.replace('far','fas');
+                                    })
+                                }
+                                document.querySelectorAll('a.js-like').forEach(function (link)
+                                {
+                                    link.addEventListener('click',onClickBtnLike);
+                                })</script>
+
+
+
+                        </form>
+
+                      
+
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+        </section>
+
+    </div>
+    </body>
+
+
+{%endblock%}

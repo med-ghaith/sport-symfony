@@ -1,0 +1,34 @@
+{% block body %}
+<section class="form-comment">
+<div class="form-comment-title">
+</div>
+<form id="form-comment" class="form-validate" method="post">
+<div class="form-validate-center">
+
+<div class="name">
+{{form_start(form)}}
+{{form_errors(form.validity)}}
+{{form_widget(form.validity)}}
+</div>
+</br>
+{{form_start(modepayment)}}
+{{form_errors(modepayment.methode)}}
+{{form(modepayment.methode)}}
+{{form_end(modepayment)}}
+</br>
+<div class="form-submit">
+<input type="submit" class="btn-submit" id="{{ form.save.vars.id }}" name="{{ form.save.vars.full_name }}" 
+ value="Enregistrer">
+ {% do form.save.setRendered %}
+ 
+{{form_end(form)}}
+</div>
+
+</div>
+</form>
+
+</section>
+</div>
+</section>
+
+    {% endblock %}

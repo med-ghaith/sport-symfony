@@ -1,0 +1,39 @@
+{% extends 'back.base.html.twig' %}
+
+{% block title %}Manage Gym{% endblock %}
+
+{% block body %}
+    <h1>Gym table</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Location</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for gym in gyms %}
+            <tr>
+                <td>{{ gym.id }}</td>
+                <td>{{ gym.name }}</td>
+                <td>{{gym.description|slice(0,60)}}...</td>
+                <td>{{ gym.location }}</td>
+                <td>
+                    <a href="{{ path('gymdash_show', {'id': gym.id}) }}">show</a>
+                    <a href="{{ path('gymdash_edit', {'id': gym.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('gymdash_new') }}">Create new</a>
+{% endblock %}

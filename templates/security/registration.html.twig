@@ -1,0 +1,37 @@
+{% extends 'front.base.html.twig' %}
+
+{% block title %}registration{% endblock %}
+
+{% block body %}
+    <section class="page-heading">
+        <div class="title-slide">
+            <div class="container">
+                <div class="banner-content slide-container">
+                    <div class="page-title">
+                        <h3>Register</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="page-content">
+        <div class="breadcrumbs">
+            <div class="container">
+                {{ form_start(form, {attr: {'novalidate': 'novalidate'}})  }}
+                {{ form_row(form.firstName, {'attr':{'placeholder' : 'You first name...'} }) }}
+                {{ form_row(form.lastName, {'attr':{'placeholder' : 'You last name...'} }) }}
+                {{ form_row(form.email, {'attr':{'placeholder' : 'You email...'} }) }}
+                {{ form_row(form.password, {'attr':{'placeholder' : 'You password...'} }) }}
+                {{ form_row(form.confirm_password, {'attr':{'placeholder' : 'confirm your password...'} }) }}
+                <button type="submit">Inscription</button>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+{% endblock %}

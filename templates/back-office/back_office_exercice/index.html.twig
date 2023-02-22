@@ -1,0 +1,176 @@
+{% extends 'back.base.html.twig' %}
+
+{% block title %}Exercises{% endblock %}
+ {% block stylesheets %}
+     {{ parent() }}
+     <link rel="stylesheet" type="text/css" href={{ asset('front/assets/css/style.css') }}>
+     <link rel="stylesheet" type="text/css" href={{ asset('front/assets/css/colors.css') }}>
+     <link rel="stylesheet" type="text/css" href={{ asset('front/assets/css/exercices.css') }}>
+ {% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        function changeImage(a, idEx) {
+            document.getElementById('img-id' + idEx).src = a;
+        }
+    </script>
+{% endblock %}
+{% block body %}
+    <link rel="stylesheet" type="text/css" href={{ asset('front/assets/css/exercices.css') }}>
+                <div class="container">
+                    <a href="{{ path('exercice_new') }}" style="font-size: 33px; color: #0d6efd">Create new</a>
+                    <div class="row">
+
+                        <section id="our-trainers" class="our-trainers">
+                            {% for exercice in exercices %}
+{#                            <div class="card">#}
+{#                            <div class="card-header p-3 pt-2" >#}
+                                <div class="our-trainer-box col-md-4 col-sm-6 col-xs-12">
+                                    <div class="product-image-wrapper">
+                                        <div class="product-content">
+                                            <div class="product-image product-trainer">
+                                                <a href="trainer-profile.html"><img
+                                                            src={{ exercice.imageUrl }} alt=""/></a>
+                                            </div>
+                                            <div class="info-products">
+                                                <div class="img-trainers">
+                                                    <img src={{ asset("front/assets/images/boxing-icon-1.png") }} alt=""/>
+                                                </div>
+                                                <div class="product-name">
+                                                    <a href="trainer-profile.html">{{ exercice.name }}</a>
+                                                    <div class="product-bottom"></div>
+                                                </div>
+                                                <span
+                                                    {% if exercice.difficultyLevel == "easy" %}
+                                                    class="tag tag-green"
+                                                    {% elseif exercice.difficultyLevel == "medium" %}
+                                                        class="tag tag-teal"
+                                                    {% else %}
+                                                        class="tag tag-red"
+                                                        {% endif %}>
+                                                    {{ exercice.difficultyLevel }}
+                                            </span>
+                                                <div class="product-info">
+                                                    <p>{{ exercice.description }}. </p>
+                                                </div>
+
+                                                <h5>
+                                                    Number of sets: <label
+                                                            style="color: #0d6efd">{{ exercice.numberOfSets }}</label>
+                                                </h5>
+                                                <h5>
+                                                    Number of repetition: <label
+                                                            style="color: #0d6efd">{{ exercice.numberOfRepetition }}</label>
+                                                </h5>
+                                                <h5>
+                                                    Rest time: <label
+                                                            style="color: #0d6efd">{{ exercice.restTime }}</label>
+                                                </h5>
+                                                <button class="btn-card" href=""><i class="fa fa-trash-o"><a href="{{ path('exercice_delete', {'id': exercice.id}) }}"></a></i></button>
+                                                <button class="btn-card"><i class="fa fa-edit"><a href="{{ path('exercice_edit', {'id': exercice.id}) }}">edit</a></i></button>
+                                                <div class="actions">
+                                                    {% if exercice.getEquipments() is not empty %}
+                                                        <div class="equipment left-half">
+                                                            <h4>Equipment</h4>
+                                                            {% for equipment in  exercice.getEquipments() %}
+                                                                <h5 onclick='changeImage("{{ equipment.imageUrl }}","{{ exercice.id }}")'>{{ equipment.name }} <button class="btn-exercise"><i class="fa fa-trash"></i></button></h5>
+                                                            {% endfor %}
+                                                        </div>
+                                                        <div class="user right-half">
+                                                            {% set first=0 %}
+                                                            <img id="img-id{{ exercice.id }}"
+                                                                 src="{% if first == 0 %}
+                                                    {{ exercice.getEquipments().first().getImageUrl() }}
+                                                    {% set first=1 %}
+                                                    {% endif %}
+                                                    " alt="user"/>
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+{#                            </div>#}
+{#                            </div>#}
+                            {% endfor %}
+                        </section>
+                    </div>
+
+                </div>
+{#            </div>#}
+{#        </div>#}
+{#    </main>#}
+
+    {#    <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg "> #}
+    {#        <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" #}
+    {#             navbar-scroll="true"> #}
+    {#            <div class="container-fluid py-1 px-3"> #}
+
+    {#                <div class="container"> #}
+    {#                    {% for exercice in exercices %} #}
+    {#                        <div class="card"> #}
+    {#                            <div class="card-header"> #}
+    {#                                <img src="{{ exercice.imageUrl }}" alt="rover"/> #}
+    {#                            </div> #}
+    {#                            <div class="card-body"> #}
+    {#                    <span #}
+    {#                    {% if exercice.difficultyLevel == "easy" %} #}
+    {#                    class="tag tag-green" #}
+    {#                    {% elseif exercice.difficultyLevel == "medium" %} #}
+    {#                        class="tag tag-teal" #}
+    {#                    {% else %} #}
+    {#                        class="tag tag-red" #}
+    {#                            {% endif %}> #}
+    {#                        {{ exercice.difficultyLevel }} #}
+    {#                    </span> #}
+    {#                                <h3 class="card-title"> #}
+    {#                                    {{ exercice.name }} #}
+    {#                                </h3> #}
+    {#                                <div class="description"> #}
+    {#                                    <h4>Description</h4> #}
+    {#                                    <p> #}
+    {#                                        {{ exercice.description }} #}
+    {#                                    </p> #}
+    {#                                </div> #}
+    {#                                <h5> #}
+    {#                                    Number of sets: <label style="color: #0d6efd">{{ exercice.numberOfSets }}</label> #}
+    {#                                </h5> #}
+    {#                                <h5> #}
+    {#                                    Number of repetition: <label style="color: #0d6efd">{{ exercice.numberOfRepetition }}</label> #}
+    {#                                </h5> #}
+    {#                                <h5> #}
+    {#                                    Rest time: <label style="color: #0d6efd">{{ exercice.restTime }}</label> #}
+    {#                                </h5> #}
+    {#                                {% if exercice.getEquipments() is not empty %} #}
+    {#                                    <div class="equipment"> #}
+    {#                                        <h4>Equipment</h4> #}
+    {#                                        {% for equipment in  exercice.getEquipments() %} #}
+    {#                                            <h5 onclick='changeImage("{{ equipment.imageUrl }}","{{ exercice.id }}")' >{{ equipment.name }}</h5> #}
+    {#                                        {% endfor %} #}
+    {#                                    </div> #}
+    {#                                    <div class="user"> #}
+    {#                                        {% set first=0 %} #}
+
+    {#                                        <img id="img-id{{ exercice.id }}" src="{% if first == 0 %} #}
+    {#                            {{ exercice.getEquipments().first().getImageUrl() }} #}
+    {#                            {% set first=1 %} #}
+    {#                            {% endif %} #}
+    {#                            " #}
+    {#                                             alt="user"/> #}
+    {#                                    </div> #}
+    {#                                {% endif %} #}
+    {#                                <div> #}
+    {#                                    <button>Edit</button> #}
+    {#                                </div> #}
+    {#                                {{ include('exercice/_delete_form.html.twig') }} #}
+    {#                            </div> #}
+
+    {#                        </div> #}
+    {#                    {% endfor %} #}
+    {#                </div> #}
+
+    {#            </div> #}
+    {#        </nav> #}
+    {#    </main> #}
+{% endblock %}

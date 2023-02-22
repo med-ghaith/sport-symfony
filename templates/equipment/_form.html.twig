@@ -1,0 +1,5 @@
+{{ form_start(form, {attr: {'novalidate': 'novalidate'}}) }}
+    {{ form_row(form.name, {'attr':{'placeholder' : 'The equipment name...'} }) }}
+    {{ form_row(form.imageUrl, {'attr':{'placeholder' : 'Image...'} }) }}
+    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}

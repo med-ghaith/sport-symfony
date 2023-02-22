@@ -1,0 +1,36 @@
+{% extends 'back.base.html.twig' %}
+
+
+{% block body %}
+    <h1>Reservation index</h1>
+
+    <table  style="background-color: orange ;width: 700px" class="table table-bordered table-dark">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Status</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for reservation in reservations %}
+            <tr>
+                <td>{{ reservation.id }}</td>
+                <td>{{ reservation.status }}</td>
+                <td>
+               <button style="background-color: orange">    <a href="{{ path('reservation_show', {'id': reservation.id}) }}">Show</a></button>
+                    <button style="background-color: orange">      <a href="{{ path('reservation_edit', {'id': reservation.id}) }}">Edit</a></button>
+                    <button style="background-color: orange">      <a href="{{ path('reservation_delete', {'id': reservation.id}) }}">Delete</a></button>
+
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+<button style="background-color: orange">  <a href="{{ path('pdf') }}">PDF</a></button>
+{% endblock %}

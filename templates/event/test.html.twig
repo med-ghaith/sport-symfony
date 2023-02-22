@@ -1,0 +1,74 @@
+{% extends 'event/BaseCalendar.html.twig '%}
+{% block title %}Calendrier {% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.2/main.min.css" integrity="sha256-5veQuRbWaECuYxwap/IOE/DAwNxgm4ikX7nrgsqYp88=" crossorigin="anonymous">
+    <style>
+        #calendrier{
+            width: 80%;
+            margin: auto;
+background-color: #675c5c;
+        }
+    </style>
+
+
+{% endblock %}
+
+{% block body %}
+    <br>
+    <br>
+    <br>
+
+    <br>
+    <br>
+    <br>
+
+    <div id="calendrier" >
+    </div>
+    <div>
+        <a href="{{ path('event_index_row') }}">Back to event list</a>
+    </div>
+
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.2/main.min.js" integrity="sha256-YicH/8aE660iEnJtgll3vT54dJApy3XkYmqNfGVFEzA=" crossorigin="anonymous">
+    </script>
+    <script>
+        window.onload=()=> {
+            let calendarElt = document.querySelector("#calendrier");
+            let calendar = new FullCalendar.Calendar(calendarElt, {
+                initialView: 'timeGridWeek',
+                locale: 'ang',
+                timeZone: 'Europe/Paris',
+                headerToolbar: {
+                    start: 'prev,next today',
+                    center: 'title',
+                    end: 'dayGridMonth timeGridWeek'
+                },
+                events:{{ data|raw }} ,
+                editable:true,
+                eventResizableFromStart: true
+            })
+            //console.log(calendar.eventsEnabled);
+
+            calendar.on('eventChange',(e)=>{
+                let url=`api/${e.event.id}/edit`
+                let donnees={
+
+                    "start":e.event.start,
+                    "end":e.event.end,
+
+                }
+                console.log(donnees)
+
+                let xhr=new XMLHttpRequest
+                xhr.open("PUT",url)
+                xhr.send(JSON.stringify({"start": e.event.start,"end":e.event.end}));
+            })
+            calendar.render();
+        }
+    </script>
+
+{% endblock %}

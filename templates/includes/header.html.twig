@@ -1,0 +1,225 @@
+<div class="menu-wrap">
+    <div class="main-menu">
+        <h4 class="title-menu">Main menu</h4>
+        <button class="close-button" id="close-button"><i class="fa fa-times"></i></button>
+    </div>
+    <ul class="nav-menu">
+        <li class=" dropdown selected active">
+            <a href="#" data-toggle="dropdown">Home<i class="icon-arrow"></i></a>
+            <ul class="child-nav dropdown-nav">
+                <li><a href="index-v2.html">Home V2</a></li>
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a href="#" data-toggle="dropdown">Page!<i class="icon-arrow"></i></a>
+            <ul class="child-nav dropdown-nav">
+                <li><a href="about-us.html">About us</a></li>
+                <li><a href={{ path("gym_index") }}>Our Gym</a></li>
+                <li><a href="pricing-table.html">Pricing table</a></li>
+                <li><a href="our-class.html">Our classes</a></li>
+                <li><a href="class-details.html">Class details</a></li>
+                <li><a href="our-trainer.html">Our trainers</a></li>
+                <li><a href="trainer-profile.html">Trainer profile</a></li>
+                <li><a href={{ path('private_message_index') }}>Messages</a></li>
+                <li><a href={{ path('exercice_index1') }}>Exercices</a></li>
+                <li><a href={{ path('chat_bot') }}>Coach Bot</a></li>
+
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a href="#" data-toggle="dropdown">Product<i class="icon-arrow"></i></a>
+            <ul class="child-nav dropdown-nav">
+                <li><a href={{ path('listproduct') }}>Product listing</a></li>
+                <li><a href={{ path('listproduct_row') }}>Product listing row</a></li>
+                <li><a href={{ path('cart_index') }}>Product cart</a></li>
+                <li><a href="product-check-out.html">Product checkout</a></li>
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a href="#" data-toggle="dropdown">Event calendar<i class="icon-arrow"></i></a>
+            <ul class="child-nav dropdown-nav">
+                <li><a href={{path('calendar')}}>Calendar full view</a></li>
+                <li><a href={{path('event_index_row')}}>Event listing </a></li>
+                <li><a href={{ path('event_index') }}>Calendar full view</a></li>
+                <li><a href="event-listing.html">Event listing </a></li>
+                <li><a href="event-listing-grid.html">Event listing grid</a></li>
+                <li><a href="event-details.html">Event details</a></li>
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a href="#" data-toggle="dropdown">Blog<i class="icon-arrow"></i></a>
+            <ul class="child-nav dropdown-nav">
+                <li><a href={{path('blog_new')}}>New Blog</a></li>
+                <li><a href={{path('blog_index')}}>Blog listing</a></li>
+            </ul>
+        </li>
+        <li><a href="{{ path('planning_index_front') }}">Planning</a></li>
+
+        <li><a href="contact-us.html">Contact us</a></li>
+        {% if not app.user %}
+            <li><a href="{{ path('security_login') }}">Log in</a></li>
+        {% else %}
+            <li><a href="{{ path('security_logout') }}">Log out</a></li>
+        {% endif %}
+    </ul>
+</div>
+
+<div class="content-wrapper">
+    <header id="header" class="header header-container header-container-2 alt reveal">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2 col-sm-3 col-xs-3 logo">
+                    <a href="index.html"><img src={{ asset("front/assets/images/logo.png") }} alt=""/></a>
+                </div>
+                <div class="col-md-9 nav-container">
+                    <nav class="megamenu collapse navbar-collapse bs-navbar-collapse navbar-right mainnav col-md-10"
+                         role="navigation">
+                        <ul class="nav-menu">
+
+                            <li class="selected active">
+                                <a href="#">Home</a>
+                            </li>
+                            <li>
+                                <a href="#">Page!</a>
+                                <ul class="child-nav">
+                                    <li><a href="about-us.html">About us</a></li>
+                                    <li><a href={{ path("gym_index") }}>Our Gym</a></li>
+                                    <li><a href="pricing-table.html">Pricing table</a></li>
+                                    <li><a href="our-class.html">Our classes</a></li>
+                                    <li><a href="class-details.html">Class details</a></li>
+                                    <li><a href="our-trainer.html">Our trainers</a></li>
+                                    <li><a href="trainer-profile.html">Trainer profile</a></li>
+                                    <li><a href={{ path('private_message_index') }}>Messages</a></li>
+                                    <li><a href={{ path('exercice_index1') }}>Exercices</a></li>
+                                    <li><a href={{ path('chat_bot') }}>Coach Bot</a></li>
+
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#">Product</a>
+                                <ul class="child-nav">
+                                    <li><a href={{ path('listproduct') }}>Product listing</a></li>
+                                    <li><a href={{ path('listproduct_row') }}>Product listing row</a></li>
+                                    <li><a href={{ path('cart_index') }}>Product cart</a></li>
+                                    <li><a href="#">Product checkout</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#">Event calendar</a>
+                                <ul class="child-nav">
+                                    <li><a href={{path('calendar')}}>Calendar full view</a></li>
+                                    <li><a href={{path('event_index_row')}}>Event listing </a></li>
+                                    <li><a href={{ path('event_index') }}>Calendar full view</a></li>
+                                    <li><a href="event-listing.html">Event listing </a></li>
+                                    <li><a href="event-details.html">Event details</a></li>
+                                    <li><a href={{path('event_index_grid')}}>Event listing grid</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#">Blog</a>
+                                <ul class="child-nav">
+                                    <li><a href={{path('blog_new')}}>New Blog</a></li>
+                                    <li><a href={{path('blog_index')}}>Blog listing</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="{{ path('planning_index_front') }}">Planning</a></li>
+
+                            <li><a href="contact-us.html">Contact us</a></li>
+                            {% if not app.user %}
+                            <li><a href="{{ path('security_login') }}">Log in</a></li>
+                            {% else %}
+                            <li><a href="{{ path('security_logout') }}">Log out</a></li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                </div>
+                <div class="quick-access col-md-1 col-sm-2 col-xs-3">
+
+                    <div class="shopping-cart">
+                        <a href="#"><i class="fa fa-shopping-cart"></i></a>
+                        <div class="mini-cart product-popular">
+
+                            <h3 class="title">Your Cart</h3>
+                            <ul>
+
+                                <li>
+                                    <div class="product-image">
+                                        <a href="#"><img src={{ asset("front/assets/images/popular-product.jpg") }} alt=""></a>
+                                    </div>
+
+                                    <div class="info-products">
+                                        <div class="product-name">Lorem ipsum dolor sit amet consectetur
+                                        </div>
+                                        <div class="price-box">
+                                            <span class="regular-price">$200.60</span>
+                                        </div>
+                                    </div>
+                                </li>
+                                {% if carts is defined %}
+                                {% for cart in carts %}
+                                    <li>
+                                        <div class="product-image">
+                                            <a href="#" ><img
+                                                        style="max-width:80px;
+max-height:80px;
+height: auto;
+width:auto;"alt="" src="{{ asset('uploads/image/' ~ cart.product.imageUrl)}}" alt=""></a>
+                                        </div>
+                                        <div class="info-products">
+                                            <div class="product-name">{{ cart.product.name }}
+                                            </div>
+                                            <div class="price-box">
+                                                <span class="regular-price">{{ cart.price }} DT</span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                                {% endif %}
+
+                              <div>
+
+                                <button class="check" title="Check out" type="button">
+                                    {% set somme = 0 %}
+                                    {% if carts is defined %}
+                                        {% for cart in carts %}
+                                            {%  set somme = somme + cart.price%}
+
+                                        {% endfor %}
+
+
+                                        <span>TOTAL {{ somme}} DT</span>
+
+                                        <a href="{{ path('cart_checkout') }}" class="check" title="Check out" type="button">
+                                            <span>Check out</span>
+                                        </a>
+                                    {% endif %}
+
+                                </button>
+
+
+                              </div>
+
+
+                            </ul>
+
+
+                        </div>
+                    </div>
+                    <div class="search">
+                        <a href="#"><i class="fa fa-search"></i></a>
+                        <form id="search" method="post" name="">
+                            <div class="search-box">
+                                <input class="top-search" type="text" placeholder="Enter your keywords"
+                                       name="search" title="Search">
+                                <input class="sub-search" type="image"
+                                       src={{ asset("front/assets/images/search.png") }} alt="Submit">
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+                <button class="menu-button" id="open-button"></button>
+            </div>
+        </div>
+    </header>
+</div>

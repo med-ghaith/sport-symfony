@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+
+<title>New Cart</title>
+
+{% block body %}
+    <h1>Create new Cart</h1>
+
+    {{ include('cart/_form.html.twig') }}
+
+    <a href="{{ path('cart_index') }}">back to list</a>
+{% endblock %}

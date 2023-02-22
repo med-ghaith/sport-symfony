@@ -1,0 +1,57 @@
+{% extends 'back.base.html.twig' %}
+
+{% block body %}
+    <div style="display:inline-block;vertical-align:top;">
+        <img  style= "height: 400px" width="400px" alt="" src={{ event.imageUrl }} >
+    </div>
+
+    <div style="display:inline-block;">
+        <br>
+        <h1>Event Information :</h1>
+        <table class="table table-bordered table-dark"  >
+            <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ event.id }}</td>
+            </tr>
+            <tr>
+                <th>StartDate</th>
+                <td>{{ event.startDate ? event.startDate|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>EndDate</th>
+                <td>{{ event.endDate ? event.endDate|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ event.description }}</td>
+            </tr>
+            <tr>
+                <th>NombreReservation</th>
+                <td>{{ event.nombreReservation }}</td>
+            </tr>
+            <tr>
+                <th>Fees</th>
+                <td>{{ event.fees }}</td>
+            </tr>
+            <tr>
+                <th>Category</th>
+                <td>{{ event.category }}</td>
+            </tr>
+            <tr>
+                <th>ImageUrl</th>
+                <td>{{ event.imageUrl }}</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <button style="background-color: orange">  <a href="{{ path('event_index') }}">Back to list</a> </button>
+
+        <button style="background-color: orange ; padding-right : 20px; float:left;">  <a href="{{ path('event_edit', {'id': event.id}) }}">Edit</a></button>
+
+        {{ include('event/_delete_form.html.twig') }}
+
+    </div>
+
+
+{% endblock %}

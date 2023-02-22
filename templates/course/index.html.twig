@@ -1,0 +1,280 @@
+{% extends 'front.base.html.twig' %}
+
+{% block body %}
+
+
+<section class="page page-product">
+
+<section class="page-heading">
+<div class="title-slide">
+<div class="container">
+<div class="banner-content">
+<div class="page-title">
+<h3>course listing</h3>
+</div>
+</div>
+</div>
+</div>
+</section>
+<div class="page-content">
+
+<div class="breadcrumbs">
+<div class="container">
+<div class="row">
+<div class="col-md-9">
+<ul>
+<li class="home"><a href="#"><i class="fa fa-home"></i> Home</a></li>
+<li><span>//</span></li>
+<li class="category-2"><a href="#">course listing</a></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+<div class="product-list">
+<div class="container">
+<div class="row">
+<div class="col-md-9">
+<div class="toolbar">
+<p class="amount">
+<strong>SHOWING ALL {{courses|length}} RESULTS</strong>
+<strong>
+<a href="{{ path('course_new',{'id': courses[0].gym.id}) }}">Create new <i class="fa fa-plus-square-o" aria-hidden="true"></i></a>
+</strong>
+</p>
+
+<div class="sorter">
+<div class="sort-by">
+<select onchange="setLocation(this.value)">
+<option selected="selected" value="">Default sorting</option>
+<option value="">Position</option>
+<option value="">Name</option>
+<option value="">Price</option>
+</select>
+</div>
+
+</div>
+</div>
+
+<div class="row">
+{% for course in courses %}
+<div class="col-md-12 col-sm-6 col-xs-12">
+<div class="product-image-wrapper">
+<div class="product-content">
+
+<div class="product-image">
+<div class="parallax-block-wrap-module auto-width">
+<div class="parallax-block bt-advance-parallax" id="parallax-block">
+
+<div class="control-button">
+<div class="nav-wrap hidden">
+<div class="nav-wrap-in next">
+<span class="nav-next"></span>
+</div>
+<div class="nav-wrap-in prev">
+<span class="nav-prev"></span>
+</div>
+</div>
+<div style="display: none;" class="button-wrap">
+<span class="button close-btn"></span>
+</div>
+</div>
+<div class="parallax-background">
+
+<div class="parallax-background-overlay"></div>
+<img alt="" src={{asset("front/assets/images/boxing/bg_44.jpg")}}>
+</div>
+<div class="parallax-block-content default-pos parallax-text">
+<div class="container">
+<p class="strart-your">{{course.name}}</p>
+<h1 class="training-title">{{course.description}}</h1>
+<span class="button open-btn"><span>Play Now</span></span>
+</div>
+</div>
+<div class="overlay-loading"><span class="loading">
+<img src={{asset("front/assets/images/loading-black.html")}} alt="" /></span>
+</div>
+
+<div class="parallax-content-wrap">
+<div class="parallax-content hidden">
+<div class="parallax-content-in">
+</div>
+
+<div class="content-show-large">
+<div class="item-contain">
+<div class="video-inner">
+
+<video data-fill-mode="fill" data-loop="true" data-autopause="false" loop>
+<source type="video/mp4" src="video/demo.mp4" />
+</video>
+</div>
+</div>
+<div class="loading"><img src={{asset("front/assets/images/loading-black.html")}} alt="" /></div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+
+<div class="info-products">
+<div class="product-name">
+<a href="product-detail.html">{{course.name}}</a>
+<div class="product-bottom"></div>
+</div>
+<div class="price-box">
+<span class="special-price">{{course.description}}</span>
+</div>
+<div class="actions">
+<ul>
+<li><a href={{ path('course_edit', {'id': course.id}) }}><i class="fa fa-cog" aria-hidden="true"></i></a></li>
+<li><a href={{ path('course_delete', {'id': course.id}) }}><i class="fa fa-trash-o" aria-hidden="true"></i></a></li>
+
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+{% endfor %}
+<div class="navigation">
+            {{ knp_pagination_render(courses) }}
+</div>
+</div>
+
+
+
+<div class="clearfix"></div>
+<div class="pages">
+
+</div>
+</div>
+ <div class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
+<section class="class-trainer">
+<div class="class-trainer-title">
+<h4>Profile</h4>
+<div class="img-trainer">
+<img src={{asset("front/assets/images/gestionsalle/california.png")}} 
+id="output" style="height:100px; border-radius: 80%;" alt="">
+</div>
+</div>
+<div class="class-trainer-content">
+<h4>{{courses[0].gym.name}}</h4>
+<h6>{{courses[0].gym.location}}</h6>
+<p>{{courses[0].gym.description|slice(0,160)}}...</p>
+<a class="profile" href={{ path('gym_show', {'id':courses[0].gym.id}) }}>Profile</a>
+</div>
+</section >
+<section class="class-info">
+ <div class="class-info-title">
+<h4>Class Information</h4>
+</div>
+<div class="class-info-content">
+<div class="info-content">
+<span><i class="fa fa-clock-o"></i> Time:</span>
+<span>12 Months</span>
+</div>
+</div>
+<div class="class-info-content">
+<div class="info-content">
+<span><i class="fa fa-calendar-o"></i> TimeFrame:</span>
+<span>Monday - Friday</span>
+</div>
+</div>
+<div class="class-info-content">
+<div class="info-content">
+<span><i class="fa fa-bookmark"></i> Certificate:</span>
+<span>Professional</span>
+</div>
+</div>
+<div class="course">
+<a href="#">Take This Course</a>
+</div>
+</section>
+<section class="class-related">
+<div class="class-related-title">
+<h4>Class Related</h4>
+</div>
+<div class="classes-content">
+<div class="related-product related-product-1">
+<div class="box-inner">
+<img src={{ asset("front/assets/images/onepage/classes-1.jpg")}} alt="" />
+<div class="box-content">
+<div class="table">
+<div class="box-cell">
+<div class="title">
+<a href="our-class-details.html">
+<span>Benefits of Boxing</span>
+</a>
+</div>
+<div class="box-text">Lorem ipsum dolor sit amet, consectetur adipiscing...</div>
+<div class="box-details">
+<a href="our-class-details.html">Details</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="name-product">
+<a class="name-product-details" href="#">Boxing</a>
+</div>
+</div>
+<div class="related-product related-product-2">
+<div class="box-inner">
+<img src={{ asset("front/assets/images/onepage/classes-2.jpg")}} alt="" />
+<div class="box-content">
+<div class="table">
+<div class="box-cell">
+<div class="title">
+<a href="our-class-details.html">
+<span>Benefits of Boxing</span>
+</a>
+</div>
+<div class="box-text">Lorem ipsum dolor sit amet, consectetur adipiscing...</div>
+<div class="box-details">
+<a href="our-class-details.html">Details</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="name-product">
+<a class="name-product-details" href="#">Boxing</a>
+</div>
+</div>
+</div>
+
+</section>
+</div>
+
+
+</div>
+</div>
+</div>
+</div>
+</section>
+
+
+
+<script type="text/javascript" src={{asset("front/assets/js/jquery-2.1.0.min.js")}}></script>
+<script type="text/javascript" src={{asset("front/assets/js/bootstrap.min.js")}}></script>
+<script type="text/javascript" src={{asset("front/assets/js/jquery.easing.1.3.js")}}></script>
+<script type="text/javascript" src={{asset("front/assets/js/parallax/jquery.parallax-1.1.3.js")}}></script>
+<script type="text/javascript" src={{asset("front/assets/js/parallax/jquery.transform2d.js")}}></script>
+<script type="text/javascript" src={{asset("front/assets/js/parallax/script.js")}}></script>
+<script type="text/javascript" src={{asset("front/assets/js/parallax/parallax.js")}}></script>
+<script type="text/javascript" src={{asset("front/assets/js/masterslider.min.js")}}></script>
+<script type="text/javascript" src={{asset("front/assets/js/banner.js")}}></script>
+<script type="text/javascript" src={{asset("front/assets/js/home.map.js")}}></script>
+<script type="text/javascript" src={{asset("front/assets/js/waypoints.js")}}></script>
+<script type="text/javascript" src={{asset("front/assets/js/template.js")}}></script>
+<script type="text/javascript" src={{asset("front/assets/js/dropdown.js")}}></script>
+<script type="text/javascript" src={{asset("front/assets/js/owl.carousel.min.js")}}></script>
+<script type="text/javascript" src={{asset("front/assets/js/theme.js")}}></script>
+<script type="text/javascript" src={{asset("front/assets/js/classie.js")}}></script>
+<script type="text/javascript" src={{asset("front/assets/js/main.js")}}></script>
+
+
+{% endblock %}

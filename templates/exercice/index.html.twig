@@ -1,0 +1,248 @@
+{% extends 'front.base.html.twig' %}
+
+{% block title %}Equipment{% endblock %}
+ {% block stylesheets %}
+     {{ parent() }}
+     <link rel="stylesheet" type="text/css" href={{ asset('front/assets/css/exercices.css') }}>
+
+ {% endblock %}
+ {% block javascripts %}
+     {{ parent() }}
+     <script type="text/javascript">
+         function changeImage(a, idEx) {
+             document.getElementById('img-id' + idEx).src = a;
+         }
+     </script>
+ {% endblock %}
+
+{% block body %}
+
+    <section class="page-heading">
+        <div class="title-slide">
+            <div class="container">
+                <div class="banner-content slide-container">
+                    <div class="page-title">
+                        <h3>Our Exercises</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="page-content">
+
+        <div class="breadcrumbs">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-9">
+                        <ul>
+                            <li class="home"><a href="#"><i class="fa fa-home"></i> Home</a></li>
+                            <li><span>//</span></li>
+                            <li class="category-1"><a href="#">Page!</a></li>
+                            <li><span>//</span></li>
+                            <li class="category-2">Our Exercises</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <div class="container">
+
+                <div class="row">
+                    <section id="our-trainers" class="our-trainers">
+                        {% for exercice in exercices %}
+                            <div class="our-trainer-box col-md-4 col-sm-6 col-xs-12">
+                                <div class="product-image-wrapper">
+                                    <div class="product-content">
+                                        <div class="product-image product-trainer">
+                                            <a href="trainer-profile.html"><img src={{ exercice.imageUrl }} alt=""/></a>
+                                        </div>
+                                        <div class="info-products">
+                                            <div class="img-trainers">
+                                                <img src={{ asset("front/assets/images/boxing-icon-1.png") }} alt=""/>
+                                            </div>
+                                            <div class="product-name">
+                                                <a href="trainer-profile.html">{{ exercice.name }}</a>
+                                                <div class="product-bottom"></div>
+                                            </div>
+                                            <span
+                                                    {% if exercice.difficultyLevel == "easy" %}
+                                                    class="tag tag-green"
+                                                    {% elseif exercice.difficultyLevel == "medium" %}
+                                                        class="tag tag-teal"
+                                                    {% else %}
+                                                        class="tag tag-red"
+                                                    {% endif %}>
+                                                    {{ exercice.difficultyLevel }}
+                                            </span>
+                                            <div class="product-info">
+                                                <p>{{ exercice.description }}. </p>
+                                            </div>
+
+                                            <h5>
+                                                Number of sets: <label
+                                                        style="color: #0d6efd">{{ exercice.numberOfSets }}</label>
+                                            </h5>
+                                            <h5>
+                                                Number of repetition: <label
+                                                        style="color: #0d6efd">{{ exercice.numberOfRepetition }}</label>
+                                            </h5>
+                                            <h5>
+                                                Rest time: <label style="color: #0d6efd">{{ exercice.restTime }}</label>
+                                            </h5>
+                                            <div class="actions">
+                                                {% if exercice.getEquipments() is not empty %}
+                                                    <div class="equipment left-half">
+                                                        <h4>Equipment</h4>
+                                                        {% for equipment in  exercice.getEquipments() %}
+                                                            <h5 onclick='changeImage("{{ equipment.imageUrl }}","{{ exercice.id }}")'>{{ equipment.name }}</h5>
+                                                        {% endfor %}
+                                                    </div>
+                                                    <div class="user right-half">
+                                                        {% set first=0 %}
+                                                        <img name="{{ path('listproduct') }}"
+                                                             onclick="window.open(this.name)"
+                                                             id="img-id{{ exercice.id }}" src="{% if first == 0 %}
+                                                    {{ exercice.getEquipments().first().getImageUrl() }}
+                                                    {% set first=1 %}
+                                                    {% endif %}
+                                                    " alt="user"/>
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </section>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    {#    <div class="container"> #}
+    {#        {% for exercice in exercices %} #}
+    {#            <div class="card"> #}
+    {#                <div class="card-header"> #}
+    {#                    <img src="{{ exercice.imageUrl }}" alt="rover"/> #}
+    {#                </div> #}
+    {#                <div class="card-body"> #}
+    {#                    <span #}
+    {#                    {% if exercice.difficultyLevel == "easy" %} #}
+    {#                    class="tag tag-green" #}
+    {#                    {% elseif exercice.difficultyLevel == "medium" %} #}
+    {#                        class="tag tag-teal" #}
+    {#                    {% else %} #}
+    {#                        class="tag tag-red" #}
+    {#                    {% endif %}> #}
+    {#                        {{ exercice.difficultyLevel }} #}
+    {#                    </span> #}
+    {#                    <h3 class="card-title"> #}
+    {#                        {{ exercice.name }} #}
+    {#                    </h3> #}
+    {#                    <div class="description"> #}
+    {#                        <h4>Description</h4> #}
+    {#                        <p> #}
+    {#                            {{ exercice.description }} #}
+    {#                        </p> #}
+    {#                    </div> #}
+    {#                    <h5> #}
+    {#                        Number of sets: <label style="color: #0d6efd">{{ exercice.numberOfSets }}</label> #}
+    {#                    </h5> #}
+    {#                    <h5> #}
+    {#                        Number of repetition: <label style="color: #0d6efd">{{ exercice.numberOfRepetition }}</label> #}
+    {#                    </h5> #}
+    {#                    <h5> #}
+    {#                        Rest time: <label style="color: #0d6efd">{{ exercice.restTime }}</label> #}
+    {#                    </h5> #}
+    {#                    {% if exercice.getEquipments() is not empty %} #}
+    {#                        <div class="equipment"> #}
+    {#                            <h4>Equipment</h4> #}
+    {#                            {% for equipment in  exercice.getEquipments() %} #}
+    {#                                <h5 onclick='changeImage("{{ equipment.imageUrl }}","{{ exercice.id }}")' >{{ equipment.name }}</h5> #}
+    {#                            {% endfor %} #}
+    {#                        </div> #}
+    {#                        <div class="user"> #}
+    {#                            {% set first=0 %} #}
+
+    {#                            <img id="img-id{{ exercice.id }}" src="{% if first == 0 %} #}
+    {#                            {{ exercice.getEquipments().first().getImageUrl() }} #}
+    {#                            {% set first=1 %} #}
+    {#                            {% endif %} #}
+    {#                            " #}
+    {#                                 alt="user"/> #}
+    {#                        </div> #}
+    {#                    {% endif %} #}
+    {#                </div> #}
+    {#            </div> #}
+    {#        {% endfor %} #}
+    {#    </div> #}
+
+
+
+
+    {#    </div> #}
+    {#    <div class="container"> #}
+    {#        <div class="row exercise-item_row"> #}
+
+    {#            <!-- exercise-item Post --> #}
+    {#            <div class="col-xl-4 col-md-6 exercise-item_col"> #}
+    {#                <div class="exercise-item_post"> #}
+    {#                    <div class="exercise-item_post_image"><img src="{{ asset('front/assets/images/blog_4.jpg') }}" alt=""></div> #}
+    {#                    <div class="exercise-item_post_title"><a href="#">Tips for the perfect body</a></div> #}
+    {#                    <div class="exercise-item_post_date"><a href="#">june 29, 2018</a></div> #}
+    {#                    <div class="exercise-item_post_text"> #}
+    {#                        <p>Etiam nec odio vestibulum est mattis effic iturut magna. Pellentesque sit amet tellus blandit. Odio vestibulum est mattis effic iturut.</p> #}
+    {#                    </div> #}
+    {#                    <div class="exercise-item_post_link"><a href="#">Read More</a></div> #}
+    {#                </div> #}
+    {#            </div> #}
+    {#        </div> #}
+    {#    </div> #}
+    {# </div> #}
+    {#    <h1>Exercice index</h1> #}
+
+    {#    <table class="table"> #}
+    {#        <thead> #}
+    {#            <tr> #}
+    {#                <th>Id</th> #}
+    {#                <th>Name</th> #}
+    {#                <th>ImageUrl</th> #}
+    {#                <th>Description</th> #}
+    {#                <th>DifficultyLevel</th> #}
+    {#                <th>NumberOfSets</th> #}
+    {#                <th>NumberOfRepetition</th> #}
+    {#                <th>RestTime</th> #}
+    {#                <th>actions</th> #}
+    {#            </tr> #}
+    {#        </thead> #}
+    {#        <tbody> #}
+    {#        {% for exercice in exercices %} #}
+    {#            <tr> #}
+    {#                <td>{{ exercice.id }}</td> #}
+    {#                <td>{{ exercice.name }}</td> #}
+    {#                <td>{{ exercice.imageUrl }}</td> #}
+    {#                <td>{{ exercice.description }}</td> #}
+    {#                <td>{{ exercice.difficultyLevel }}</td> #}
+    {#                <td>{{ exercice.numberOfSets }}</td> #}
+    {#                <td>{{ exercice.numberOfRepetition }}</td> #}
+    {#                <td>{{ exercice.restTime }}</td> #}
+    {#                <td> #}
+    {#                    <a href="{{ path('exercice_show', {'id': exercice.id}) }}">show</a> #}
+    {#                    <a href="{{ path('exercice_edit', {'id': exercice.id}) }}">edit</a> #}
+    {#                </td> #}
+    {#            </tr> #}
+    {#        {% else %} #}
+    {#            <tr> #}
+    {#                <td colspan="9">no records found</td> #}
+    {#            </tr> #}
+    {#        {% endfor %} #}
+    {#        </tbody> #}
+    {#    </table> #}
+
+    {#    <a href="{{ path('exercice_new') }}">Create new</a> #}
+{% endblock %}

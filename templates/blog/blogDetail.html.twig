@@ -1,0 +1,362 @@
+{% extends 'front.base.html.twig' %}
+
+
+
+{% block title %}Blog{% endblock %}
+
+
+{% block body %}
+
+<section class="page-heading">
+    <div class="title-slide">
+    <div class="container">
+    <div class="banner-content slide-container">
+    <div class="page-title">
+    <h3>Our Blog</h3>
+    </div>
+    </div>
+    </div>
+    </div>
+    </section>
+    
+    <div class="page-content">
+    
+    <div class="breadcrumbs">
+    <div class="container">
+    <div class="row">
+    <div class="col-md-9">
+    <ul>
+    <li class="home"><a href="#"><i class="fa fa-home"></i> Home</a></li>
+    <li><span>//</span></li>
+    <li class="category-1"><a href="#">Blog</a></li>
+    <li><span>//</span></li>
+    <li class="category-2"><a href="#">{{blog.title}}</a></li>
+    </ul>
+    </div>
+    </div>
+    </div>
+    </div>
+    
+    
+    <div class="main-content our-blog">
+    <div class="container">
+    <div class="row">
+    <div class="col-lg-9 col-md-8 col-sm-12 col-xs-12">
+    
+    <div class="blog-page">
+    <section class="blog-listing">
+    <section class="blog-item">
+    <div class="img-blog">
+    <img src="{{asset('uploads/image/') ~ blog.image}}" alt="" />
+    </div>
+    <div class="blog-main">
+    <div class="img-blog">
+    <img src={{asset("images/img-pp.png")}} alt="" />
+    <div class="icon-blog">
+    <span class="icon">
+    <a href="#"><i class="fa fa-user"></i></a>
+    </span>
+    <span class="icon">
+    <a href="#"><i class="fa fa-calendar"></i></a>
+    </span>
+    <span class="icon icon-reply">
+    <a href="#"><i class="fa fa-reply-all"></i></a>
+    </span>
+    <span class="icon">
+    <a href="#"><i class="fa fa-comment"></i></a>
+    </span>
+    </div>
+    </div>
+    <div class="blog-content">
+    <div class="blog-header">
+    <div class="blog-title-top">
+    <a href="#">Success Stories</a>
+    </div>
+    <div class="blog-title">
+    <h3>{{blog.title}}</h3>
+    </div>
+    </div>
+    <div class="details-desc-full">
+    <p>
+    {{blog.description}}
+    </p>
+    </div>
+    <div class="caveats">
+    <div class="caveats-title">
+    <h5>Caveats Worth Mentioning</h5>
+    </div>
+    <div class="caveats-full">
+    <p>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu ante eget nisl convallis tempus.
+    Phasellus ante lectus, tincidunt tincidunt dui a, rhoncus interdum est. Sed molestie quis augue ac
+    pulvinar. Pellentesque egoists sed tortor egestas pretium. Nam eget fermentum tellus, et fermentum diam.
+    Mauris hendrerit, diam non commodo laoreet. Mauris hendrerit, diam non commodo laoreet, est elit volutpat mauris, vel vehicula nisl orci id nibh.
+    </p>
+    </div>
+    
+    
+    <div class="share">
+    <div class="share-title">
+    <h5>Share This Post</h5>
+    </div>
+    <div class="social-icon">
+    <a href="https://www.facebook.com/sharer.php?u=http://127.0.0.1:8000{{ path('blog-like', {'id': blog.id}) }}&title={{blog.title}}&description={{blog.description}}"><i class="fa fa-facebook"></i></a>
+    <a href="https://twitter.com/share?url=http://127.0.0.1:8000{{ path('blog-like', {'id': blog.id}) }}&title={{blog.title}}&description={{blog.description}}"><i class="fa fa-twitter"></i></a>
+    <a href="#"><i class="fa fa-google-plus"></i></a>
+    <a href="#"><i class="fa fa-youtube"></i></a>
+    <a class="in" href="#"><i class="fa fa-linkedin"></i></a>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </section>
+    </section>
+    <section class="author">
+    <div class="col-md-2 col-sm-2 col-xs-4">
+    <img class="img-comments" src={{asset("images/img-comment.png")}} alt="" />
+    </div>
+    <div class="col-md-10">
+    <div class="blog-title">
+    <a href="blog-details.html">{{blog.user.firstName ~' '~ blog.user.lastName}}</a>
+    <p class="caption-desc">
+    
+    </p>
+    </div>
+    </div>
+    </section>
+    <a href={{ path('pdf-down', {id: blog.id}) }} >download blog</a>
+    
+    
+    <section class="comments">
+    <div class="comments-title">
+    <h5>Comments</h5>
+    </div>
+    <div class="comments-content">
+    <div class="answer">
+    <div class="col-md-2 col-sm-2 col-xs-3">
+    <img class="img-comments" src={{asset("images/img-protile.png")}} alt="" />
+    </div>
+    
+    <div class="col-md-10">
+        {% for rat in blogrates %}
+    <div class="content-cmt">
+    <span class="name-cmt">{{blog.user.firstName ~' '~ blog.user.lastName}}</span>
+    <span class="date-cmt">{{rat.getCreatedDate() | date}}</span>
+    <span><a href="#">Reply</a></span>
+    <p class="content-reply">
+        {{rat.comment}}
+    </p>
+    {% endfor %}
+    </div>
+    </div>
+    
+    </div>
+    
+    <div class="reply">
+    <div class="col-md-3 col-sm-3 col-xs-3">
+    <img class="img-comments" src="images/img-protile.png" alt="" />
+    </div>
+    
+    <section class="form-comment">
+    <div class="form-comment-title">
+    <h5>Leave a Comments</h5>
+    </div>
+    {{form_start(noteform)}}
+    <div>
+        {{form_widget(noteform.name , {'value':blog.title ,'type':'hidden'})}}
+
+    </div>
+    
+    {% set somme = 0 %}
+    {% for eve in rates %}
+        {% set somme = (eve.rate / rates|length)+ somme %}
+    {% endfor %}
+    <div class="rateyo" id= "rating"
+         data-rateyo-rating={{somme}}
+         data-rateyo-num-stars="5"
+         data-rateyo-score="3">
+
+    </div>
+    <br>
+    <style>
+        h5{
+            color:grey;
+        }
+    </style>
+
+    <h5 class="result">Raiting : {{somme|number_format(1, '.')}} /5</h5>
+
+    {{form_widget(noteform.rate , { 'id': 'rating','type':'hidden'} ) }}
+    {{form_widget(noteform.comment, {'attr': {'class': 'control'}}) }}
+    <div style="margin-top:15px;">
+    {{ form_row(noteform.add, {'label':'Send','attr':{ 'class':'btn-submit ' }}) }}
+    </div>
+    <br>
+    {{form_end(noteform)}}
+   
+    </section>
+    </div>
+    </section>
+    
+    </div>
+    
+    </div>
+     <div class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
+    <div class="sidebar-left">
+    <section class="menu-sidebar">
+    <div class="title-menu">
+    <h4>Blog categories</h4>
+    </div>
+    <ul class="nav-menu">
+    <li><a href="#">Training blog</a></li>
+    <li><a href="#">Street fitness</a></li>
+    <li><a href="#">Sport</a></li>
+    <li><a href="#">Boxing</a></li>
+    <li><a href="#">Yoga</a></li>
+    <li><a href="#">Success stories</a></li>
+    </ul>
+    </section>
+    <section class="popular-event popular-event-details">
+    <div class="popular-event-title">
+    <h4>Popular Event</h4>
+    </div>
+    <div class="news-content">
+    <ul>
+    <li class="latest-news-item">
+    <div class="news-item-inner">
+    <div class="news-date">
+    <div class="news-day">25</div>
+    <div class="news-month">SEP</div>
+    </div>
+    <div class="news-info">
+    <div class="news-title">
+    <a href="#">Repeating month event</a>
+    </div>
+    <div class="news-time">
+    <p>8:00 A.M- 10:00 P.M</p>
+    </div>
+    </div>
+    </div>
+    </li>
+    <li class="latest-news-item">
+    <div class="news-item-inner">
+    <div class="news-date">
+    <div class="news-day">25</div>
+    <div class="news-month">SEP</div>
+    </div>
+    <div class="news-info">
+    <div class="news-title">
+    <a href="#">Cras commodo suscipit </a>
+    </div>
+    <div class="news-time">
+    <p>8:00 A.M- 10:00 P.M</p>
+    </div>
+    </div>
+    </div>
+    </li>
+    <li class="latest-news-item">
+    <div class="news-item-inner">
+    <div class="news-date">
+    <div class="news-day">25</div>
+    <div class="news-month">SEP</div>
+    </div>
+    <div class="news-info">
+    <div class="news-title">
+    <a href="#">Nunc imperdiet libero sapien, ut faucibus mag</a>
+    </div>
+    <div class="news-time">
+    <p>8:00 A.M- 10:00 P.M</p>
+    </div>
+    </div>
+    </div>
+    </li>
+    <li class="latest-news-item">
+    <div class="news-item-inner">
+    <div class="news-date">
+    <div class="news-day">25</div>
+    <div class="news-month">SEP</div>
+    </div>
+    <div class="news-info">
+    <div class="news-title">
+    <a href="#">Mauris id commodo dolor</a>
+    </div>
+    <div class="news-time">
+    <p>8:00 A.M- 10:00 P.M</p>
+    </div>
+    </div>
+    </div>
+    </li>
+    <li class="latest-news-item">
+    <div class="news-item-inner">
+    <div class="news-date">
+    <div class="news-day">25</div>
+    <div class="news-month">SEP</div>
+    </div>
+    <div class="news-info">
+    <div class="news-title">
+    <a href="#">Lorem ipsum dolor sit amet, consectetur</a>
+    </div>
+    <div class="news-time">
+    <p>8:00 A.M- 10:00 P.M</p>
+    </div>
+    </div>
+    </div>
+    </li>
+    </ul>
+    </div>
+    </section>
+    <section class="tags">
+    <div class="tags-title archives-title">
+    <span>Tags</span>
+    </div>
+    <div class="tags-content">
+    <div class="tags-blog">
+    <a href="#">Doctors</a>
+    </div>
+    <div class="tags-blog">
+    <a href="#">Lorem ispum</a>
+    </div>
+    <div class="tags-blog">
+    <a href="#">fitness</a>
+    </div>
+    <div class="tags-blog">
+    <a href="#">boxing trainers</a>
+    </div>
+    <div class="tags-blog">
+    <a href="#">health</a>
+    </div>
+    <div class="tags-blog">
+    <a href="#">foods</a>
+    </div>
+    </div>
+    </section>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    
+    </div>
+    </div>
+    </section>
+        <script>
+            let postUrl = encodeURI(document.location.href);
+        </script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
+
+    <script>
+        $(function () {
+$(".rateyo").rateYo().on("rateyo.change", function (e, data) {
+var rating = data.rating;
+$(this).parent().find('.score').text('score :' + $(this).attr('data-rateyo-score'));
+$(this).parent().find('.result').text('rating :' + rating);
+$(this).parent().find('input[id=rating]').val(rating); // add rating value to input field
+});
+});
+    </script>
+    
+       
+{% endblock %}

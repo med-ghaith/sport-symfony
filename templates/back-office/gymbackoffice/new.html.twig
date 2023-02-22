@@ -1,0 +1,11 @@
+{% extends 'back.base.html.twig' %}
+
+{% block title %}New Gym{% endblock %}
+
+{% block body %}
+    <h1>Create new Gym</h1>
+
+    {{ include('back-office/gymbackoffice/_form.html.twig') }}
+
+    <a href="{{ path('app_gymbackoffice') }}">back to list</a>
+{% endblock %}

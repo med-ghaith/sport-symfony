@@ -1,0 +1,13 @@
+{% extends 'back.base.html.twig' %}
+
+{% block title %}Edit Gym{% endblock %}
+
+{% block body %}
+    <h1>Edit Gym</h1>
+
+    {{ include('back-office/gymbackoffice/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_gymbackoffice') }}">back to list</a>
+
+    {{ include('back-office/gymbackoffice/_delete_form.html.twig') }}
+{% endblock %}

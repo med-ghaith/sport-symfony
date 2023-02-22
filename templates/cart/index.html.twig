@@ -1,0 +1,160 @@
+{% extends 'front.base.html.twig' %}
+
+{% block body %}
+
+    <button class="menu-button" id="open-button"></button>
+    </div>
+    </div>
+    </header>
+
+
+    <section class="page-heading">
+        <div class="title-slide">
+            <div class="container">
+                <div class="banner-content">
+                    <div class="page-title">
+                        <h3>Your Cart</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="page-content">
+
+        <div class="breadcrumbs">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-9">
+                        <ul>
+                            <li class="home"><a href="#"><i class="fa fa-home"></i> Home</a></li>
+                            <li><span>//</span></li>
+                            <li class="category-2"><a href="#">Product cart</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="product-cart">
+
+            <div class="container">
+                <div class="row-title">
+                    {% set somme = 0 %}
+                    {% if carts is defined %}
+                        {% for cart in carts %}
+                            {%  set somme = somme + cart.price%}
+
+                        {% endfor %}
+
+                    {% endif %}
+
+
+
+                    <div class="col-md-2"><span><h3>Total</h3></span></div>
+                    <div class="col-md-3"><span></span><h3>{{ somme}} DT</h3> </div>
+
+
+
+                </div>
+
+                <div class="row">
+                    {% for cart in carts %}
+                    <div class="col-md-12">
+                        <div class="cart">
+                            <div class="cart-table">
+                                <div class="row-title">
+
+                                    <div class="col-md-5"><span>Item</span></div>
+                                    <div class="col-md-2"><span>Price</span></div>
+                                    <div class="col-md-2"><span>Quanlity</span></div>
+                                    <div class="col-md-2"><span>Total</span></div>
+                                    <div>{{ include('cart/_delete_form.html.twig') }}</div>
+
+                                </div>
+                                <div class="row-item">
+                                    <div class="item name-item col-md-5 col-sm-5 col-xs-12">
+                                            <div class="product-image">
+                                                <a href="#" ><img
+                                                            style="max-width:80px;
+    max-height:80px;
+    height: auto;
+    width:auto;"alt="" src="{{ asset('uploads/image/' ~ cart.product.imageUrl)}}" alt=""></a>
+                                            </div>
+
+                                        <div class="product-info">
+                                            <a href="#">{{ cart.product.name }} </a>
+
+                                        </div>
+                                    </div>
+                                    <div class="item price-item col-md-2 col-sm-2 col-xs-12">
+                                        <span class="cart-price">{{ cart.product.price }} DT</span>
+                                    </div>
+
+                                    <div class="item qty-item col-md-2 col-sm-2 col-xs-12">
+                                        <div class="add-to-cart">
+
+                                            <td>{{ cart.quantity }}</td>
+                                        </div>
+                                    </div>
+                                    <div class="item price-item col-md-2 col-sm-2 col-xs-12"><span class="cart-price">{{ cart.price }} DT</span>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+
+
+                    </div>
+
+
+                    <a class="arrows quickview" href="#quickview"><i class="fa fa-arrows"></i></a>
+
+
+                    <a class="arrows quickview" href="#quickview"><i class="fa fa-arrows"></i></a>
+                    {% endfor %}
+
+
+                    </button>
+
+
+                </div>
+            </div>
+        </div>
+
+        <div class="customNavigation">
+            <a class="btn prev"><i class="fa fa-caret-left"></i></a>
+            <a class="btn next"><i class="fa fa-caret-right"></i></a>
+        </div>
+    </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </body>
+
+    <!-- Mirrored from html.sdemo.site/athlete/product-cart.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 03 Apr 2022 01:23:15 GMT -->
+    </html>
+{% endblock %}

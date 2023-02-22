@@ -1,0 +1,121 @@
+{% extends 'front.base.html.twig' %}
+{% block body %}
+    <section class="page page-product">
+
+        <section class="page-heading">
+            <div class="title-slide">
+                <div class="container">
+                    <div class="banner-content">
+                        <div class="page-title">
+                            <h3>Event listing</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="page-content">
+
+            <div class="breadcrumbs">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-9">
+                            <ul>
+                                <li class="home"><a href="#"><i class="fa fa-home"></i> Home</a></li>
+                                <li><span>//</span></li>
+                                <li class="category-2"><a href="#">Event listing</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-list">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-9">
+                            <div class="toolbar">
+                                <p class="amount">
+                                    <strong>SHOWING ALL {{events|length}} RESULTS</strong>
+                                </p>
+                                <div class="sorter">
+                                    <div class="sort-by">
+                                        <select onchange="setLocation(this.value)">
+                                            <option selected="selected" value="">Default sorting</option>
+                                            <option value="">Position</option>
+                                            <option value="">Name</option>
+                                            <option value="">Price</option>
+                                        </select>
+                                    </div>
+                                    <p class="view-mode">
+                                        <strong class="grid-active" title="Grid"><i class="fa fa-th-large"></i></strong>
+                                        <a class="list" title="List" href={{path('event_index_row')}}><i class="fa fa-th-list"></i></a>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                {% for event in events %}
+                                    <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <div class="product-image-wrapper">
+                                            <div class="product-content">
+                                                <div class="product-image">
+                                                    <a href={{ path('event_show_front', {'id': event.id}) }}><img alt="" src={{ event.imageUrl }}></a>
+                                                </div>
+                                                <div class="info-products">
+                                                    <div class="product-name">
+                                                        <a href="product-detail.html"> {{event.category}}</a>
+                                                        <div class="product-bottom"></div>
+                                                    </div>
+                                                    <div class="price-box">
+                                                        <span class="special-price">Description: {{event.description}}</span>
+                                                    </div>
+                                                    <div class="actions">
+                                                        <ul>
+                                                            <li><a href={{ path('event_show_front', {'id': event.id}) }}><i class="fa fa-info"></i></a></li>
+                                                            <li><a href={{ path('event_edit_front', {'id': event.id}) }}><i class="fa fa-edit"></i></a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+
+
+                            <div class="clearfix"></div>
+                            <div class="pages">
+
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="product-filter">
+                                <div class="widget widget-price-filter">
+                                    <form name="" method="post" id="send-search">
+                                        <div class="email">
+                                            <input type="text" title="Search" name="search" class="custom-file-input" placeholder="Search">
+                                            <button class="button" title="Submit" type="submit"><i class="fa fa-search" ></i></button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="product-categories">
+                                <h3 class="title">Event categories</h3>
+                                {% for event in events %}
+                                    <ul>
+                                        <li><a href="#">{{ event.category }}</a></li>
+
+                                    </ul>
+                                {% endfor %}
+                            </div>
+                            <button style="background-color: orange">  <a href={{ path('new_event') }}>Create new</a></button>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

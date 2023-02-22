@@ -1,0 +1,348 @@
+
+
+{% extends 'front.base.html.twig' %}
+{% block body %}
+
+<section class="page-heading">
+    <div class="title-slide">
+        <div class="container">
+            <div class="banner-content slide-container">
+                <div class="page-title">
+                    <h3>{{event.category}}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="page-content">
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-bg {{ app.session.flashbag.peek('error')|length > 0 ? '' : 'mb-5' }}">
+
+    {% for flash_message in app.session.flashBag.get('error') %}
+        <div class="alert alert-warning" role="alert">
+            {{ flash_message }}
+        </div>
+    {% endfor %}
+
+    <div class="breadcrumbs">
+        <div class="container">
+            <ul>
+                <li class="home"><a href="#"><i class="fa fa-home"></i> Home</a></li>
+                <li><span>//</span></li>
+                <li class="category-1"><a href="#">Event</a></li>
+                <li><span>//</span></li>
+                <li class="category-2"><a href="#">{{event.category}}</a></li>
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="main-content class-detail">
+        <div class="container">
+            <div class="row">
+                <div class="profile-details">
+                    <div class="col-lg-6 col-md-4 col-sm-12 col-xs-12">
+                        <section class="profile">
+                            <div class="profile-title">
+                                <div class="row">
+{#                                    <div class="img-profile1">#}
+{#                                        <img  src={{ event.imageUrl }} id="output" style="height:100px; border-radius: 80%;" alt="">#}
+{#                                    </div>#}
+                                    <div class="profile-info">
+                                        <div class="profile-info-top">
+                                            <span style="padding-left: 50px"> Event </span>
+                                            <span class="profile-info-right">: {{event.category}}</span>
+                                        </div>
+                                        <div class="profile-info-bottom">
+                                            <span style="padding-left: 50px">Places Left</span>
+                                            <span class="profile-info-right">: {{event.nombreReservation}}</span>
+                                        </div>
+                                        <span></span>
+                                        <span class="profile-info-right">
+<span><a href="{{ path('event_edit_front', {'id': event.id}) }}"><i class="fa fa-cog" aria-hidden="true"></i> Edit Event</a></span>
+</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="profile-content">
+                                <div class="profile-icon">
+                                    <div class="rating">
+                                        <span><i class="fa fa-star"></i></span>
+                                        <span><i class="fa fa-star"></i></span>
+                                        <span><i class="fa fa-star"></i></span>
+                                        <span><i class="fa fa-star"></i></span>
+                                        <span><i class="fa fa-star"></i></span>
+                                    </div>
+                                </div>
+                                <div class="profile-text">
+                                    <p>
+                                        Description:
+                                        {{event.description}}
+                                    </p>
+                                    <p>
+                                        Start Date:
+                                        {{ event.startDate ? event.startDate|date('Y-m-d') : '' }}
+                                    </p>
+                                    <p>
+                                        End Date:
+                                        {{ event.endDate ? event.endDate|date('Y-m-d') : '' }}
+                                    </p>
+                                    <p>
+                                        Reservation fees in DT :
+                                        {{ event.fees}}
+                                    </p>
+
+                                    <a class="btn btn-danger" role="button" href={{ path('event_delete_front',{'id': event.id}) }}>Delete <i class="fa fa-play" aria-hidden="true"></i> </a>
+                                    <a class="btn btn-danger" role="button" href={{ path('event_index_row') }}>back to list</a>
+
+
+                                    <div class="share">
+                                        <div class="share-title">
+                                            <h5>Share This Event</h5>
+                                        </div>
+                                        <div class="social-icon">
+                                            <a href="#"><i class="fa fa-facebook"></i></a>
+                                            <a href="#"><i class="fa fa-twitter"></i></a>
+                                            <a href="#"><i class="fa fa-google-plus"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <div class="contact-map">
+                            <div class="map-frame-event">
+                                <input type="hidden" class="map-zoom" value="15" />
+                                <input type="hidden" class="map-lat" value="36.89926" />
+                                <input type="hidden" class="map-lng" value="10.18936" />
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <div class="col-lg-6 col-md-8 col-sm-12 col-xs-12">
+                        <section class="banner-details">
+                            <div id="carousel" class="carousel slide" data-ride="carousel">
+
+                                <div class="carousel-inner" role="listbox">
+                                    <div class="item active">
+                                        <img src={{asset("front/assets/images/bg-trainer-profile.jpg")}} alt="">
+                                    </div>
+                                    <div class="item">
+                                        <img src={{asset("front/assets/images/bg-trainer-profile-2.jpg")}} alt="">
+                                    </div>
+                                    <div class="item">
+                                        <img src={{asset("front/assets/images/bg-trainer-profile-3.jpg")}} alt="">
+                                    </div>
+                                </div>
+
+                                <a class="left carousel-control" href="#carousel" role="button" data-slide="prev">
+                                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                                <a class="right carousel-control" href="#carousel" role="button" data-slide="next">
+                                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </div>
+                        </section>
+
+
+                        <div id="filtering-demo" class="classes-content">
+                            <section id="our-class-main" class="isotope">
+                                <div class="box-inner">
+                                    <img src={{asset("front/assets/images/onepage/classes-10.jpg")}} alt="" />
+                                    <div class="box-content">
+                                        <div class="table">
+                                            <div class="box-cell">
+                                                <div class="title">
+                                                    <a href={{ path('reservation_new', {'id': event.id}) }}>
+                                                        <span>JOIN US!</span>
+                                                    </a>
+                                                </div>
+                                                <div class="box-text">JOIN US! </div>
+                                                <div class="box-details">
+                                                    <a class="btn btn-danger" role="button" href={{ path('reservation_new', {'id': event.id}) }}>Reserve</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+
+                            <section class="collection">
+
+                                <div class="team-content">
+                                    <div class="masonry-lagar">
+                                        <div class="title-match">
+                                            <h3>Reservations</h3>
+                                        </div>
+                                        <div class="league-table results-match">
+                                            <ul class="league-1 league-title">
+                                                <li class="with-10">id</li>
+                                                <li class="with-50">start date</li>
+                                                <li class="with-10">validity</li>
+                                            </ul>
+{#                                            {% for sub in subs %}#}
+{#                                                <ul class="league-2 ">#}
+{#                                                    <li class="number with-10">{{sub.id}}</li>#}
+{#                                                    <li class="with-50">{{sub.startDate| date("y-m-d")}}</li>#}
+{#                                                    <li class="with-10">{{sub.validity}}</li>#}
+{#                                                    <li class="with-10"><a href={{ path('subscription_delete', {'id': sub.id,'idgym':gym.id}) }}><i class="fa fa-trash-o" aria-hidden="true"></i></a></li>#}
+{#                                                </ul>#}
+{#                                            {% endfor %}#}
+                                            <ul class="league-1 viewall-league">
+                                                <li class="view-league"><a href="#">View all</a></li>
+                                            </ul>
+                                        </div>
+
+                            </section>
+
+
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="wrapper hide-main-content">
+                <div class="page page-category">
+
+                    <div class="content-wrapper">
+                        <div class="page-content">
+
+                            <section id="history" class="our-team-page">
+                                <div class="our-team">
+                                    <div class="our-team-content">
+                                        <div class="our-team-inner">
+                                            <div class="custom">
+                                                <div class="our-team-tabs our-team-bottom our-team-fit tab-history" data-active="1">
+                                                    <div class="our-team-panes">
+
+{#                                                        {% for video in videos %}#}
+{#                                                            <div class="our-team-pane our-team-clear">#}
+{#                                                                <div class="our-history">#}
+{#                                                                    <div class="container">#}
+{#                                                                        <div class="row">#}
+{#                                                                            <div class="video-history col-md-6 col-sm-12 col-xs-12">#}
+{#                                                                                <div class="media-responsive"><iframe width="550" height="400" src="https://www.youtube.com/embed/MfSiQn530ts"></iframe></div>#}
+{#                                                                            </div>#}
+{#                                                                            <div class="history-details col-md-6 col-sm-12 col-xs-12">#}
+{#                                                                                <h3>{{video.name}}</h3>#}
+{#                                                                                <div class="history_desc">{{video.Description|slice(0,100)}} ...</div>#}
+{#                                                                                <div class="history-skill">#}
+{#                                                                                    <ul>#}
+{#                                                                                        <li>Emergy Case</li>#}
+{#                                                                                        <li>Doctors Timetables</li>#}
+{#                                                                                        <li>Vaccinations Travel Health</li>#}
+{#                                                                                        <li>Women's Health</li>#}
+{#                                                                                        <li>Free Online Consultation</li>#}
+{#                                                                                        <li>General Illness or Injury</li>#}
+{#                                                                                        <li>Prescription Refills</li>#}
+{#                                                                                    </ul>#}
+{#                                                                                </div>#}
+{#                                                                            </div>#}
+{#                                                                        </div>#}
+{#                                                                    </div>#}
+{#                                                                </div>#}
+{#                                                            </div>#}
+{#                                                        {% endfor %}#}
+{#                                                    </div>#}
+
+{#                                                    <div class="our-team-nav">#}
+{#                                                        {% for video in videos %}#}
+{#                                                            <span class="our-team"></span>#}
+{#                                                        {% endfor %}#}
+{#                                                    </div>#}
+
+                                                </div>
+                                            </div>
+
+
+
+
+
+                                            <div id="copyright">
+                                                <div class="container">
+                                                    <div class="back-to-top"><a title="BACK_TO_TOP" href="#top"><i class="fa fa-chevron-up"></i></a></div>
+                                                    <div class="clrDiv"></div>
+                                                </div>
+                                            </div>
+
+                                            <script type="text/javascript" src={{ asset("front/assets/js/jquery-2.1.0.min.js")}}></script>
+                                            <script type="text/javascript" src={{ asset("front/assets/js/shortcode-frontend.js")}}></script>
+                                            <script type="text/javascript" src={{ asset("front/assets/js/bootstrap.min.js")}}></script>
+                                            <script type="text/javascript" src={{ asset("front/assets/js/jquery.mixitup.js")}}></script>
+                                            <script type="text/javascript" src={{ asset("front/assets/js/classie.js")}}></script>
+                                            <script type="text/javascript" src={{ asset("front/assets/js/jquery.easing.1.3.js")}}></script>
+                                            <script type="text/javascript" src={{ asset("front/assets/js/parallax/jquery.parallax-1.1.3.js")}}></script>
+                                            <script type="text/javascript" src={{ asset("front/assets/js/parallax/jquery.transform2d.js")}}></script>
+                                            <script type="text/javascript" src={{ asset("front/assets/js/parallax/script.js")}}></script>
+                                            <script type="text/javascript" src={{ asset("front/assets/js/parallax/parallax.js")}}></script>
+                                            <script type="text/javascript" src={{ asset("front/assets/js/masterslider.min.js")}}></script>
+                                            <script type="text/javascript" src={{ asset("front/assets/js/banner.js")}}></script>
+                                            <script type="text/javascript" src={{ asset("front/assets/js/waypoints.js")}}></script>
+                                            <script type="text/javascript" src={{ asset("front/assets/js/template.js")}}></script>
+                                            <script type="text/javascript" src={{ asset("front/assets/js/dropdown.js")}}></script>
+                                            <script type="text/javascript" src={{ asset("front/assets/js/main.js")}}></script>
+                                            {% endblock %}
+{#{% extends 'front.base.html.twig' %}#}
+
+{#{% block body %}#}
+{#    <h1>Event</h1>#}
+{#    <div style="display:inline-block;vertical-align:top;">#}
+{#    <img  style= "height: 400px" width="400px" alt="" src={{ event.imageUrl }} >#}
+{#        </div>#}
+
+{#    <div style="display:inline-block;">#}
+{#        <br>#}
+{#        <h1>Event Information :</h1>#}
+{#    <table class="table" >#}
+{#        <tbody>#}
+{#        <tr>#}
+{#            <th>Id</th>#}
+{#            <td>{{ event.id }}</td>#}
+{#        </tr>#}
+{#        <tr>#}
+{#            <th>StartDate</th>#}
+{#            <td>{{ event.startDate ? event.startDate|date('Y-m-d') : '' }}</td>#}
+{#        </tr>#}
+{#        <tr>#}
+{#            <th>EndDate</th>#}
+{#            <td>{{ event.endDate ? event.endDate|date('Y-m-d') : '' }}</td>#}
+{#        </tr>#}
+{#        <tr>#}
+{#            <th>Description</th>#}
+{#            <td>{{ event.description }}</td>#}
+{#        </tr>#}
+{#        <tr>#}
+{#            <th>NombreReservation</th>#}
+{#            <td>{{ event.nombreReservation }}</td>#}
+{#        </tr>#}
+{#        <tr>#}
+{#            <th>Fees</th>#}
+{#            <td>{{ event.fees }}</td>#}
+{#        </tr>#}
+{#        <tr>#}
+{#            <th>Category</th>#}
+{#            <td>{{ event.category }}</td>#}
+{#        </tr>#}
+{#        <tr>#}
+{#            <th>ImageUrl</th>#}
+{#            <td>{{ event.imageUrl }}</td>#}
+{#        </tr>#}
+{#        </tbody>#}
+{#    </table>#}
+
+{#      <button style="background-color: orange">  <a href="{{ path('event_index_row') }}">Back to list</a> </button>#}
+{#        <button style="background-color: orange ; padding-right : 20px; float:left;">  <a href="{{ path('event_edit_front', {'id': event.id}) }}">Edit</a></button>#}
+{#        <button style="background-color: orange ; padding-right : 20px; float:left;">  <a href="{{ path('reservation_new', {'id': event.id}) }}">Reserver</a></button>#}
+{#        {{ include('event/delete_front.html.twig') }}#}
+
+{#    </div>#}
+
+{#{% endblock %}#}

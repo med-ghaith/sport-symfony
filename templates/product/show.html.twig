@@ -1,0 +1,349 @@
+{% extends 'front.base.html.twig' %}
+
+
+{% block body %}
+
+
+
+<div class="quick-access col-md-1 col-sm-2 col-xs-3">
+
+
+        <div class="mini-cart product-popular">
+            <h3 class="title">Your Cart</h3>
+            <ul>
+
+                <li>
+                    <div class="product-image">
+
+                        <a href="#"><img src={{ asset('front/assets/images/store/product-shop-1.jpg')}}></a>
+                    </div>
+                    <div class="info-products">
+                        <div class="product-name">{{ product.name }}</div>
+                        <div class="price-box">
+                            <span class="regular-price">{{ product.price }}</span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <button class="check" title="Check out" type="button">
+                <span>Check out</span>
+            </button>
+        </div>
+    </div>
+
+        </form>
+    </div>
+</div>
+<button class="menu-button" id="open-button"></button>
+</div>
+</div>
+</header>
+
+
+<section class="page-heading">
+    <div class="title-slide">
+        <div class="container">
+            <div class="banner-content">
+                <div class="page-title">
+                    <h3>Product listing</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="page-content">
+
+    <div class="breadcrumbs">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9">
+                    <ul>
+                        <li class="home"><a href="#"><i class="fa fa-home"></i> Home</a></li>
+                        <li><span>//</span></li>
+                        <li class="category-2"><a href="{{ path('listproduct') }}">listproduct</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="product-detail">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="product-view">
+                        <div class="product-essential col-md-12">
+                            <div class="product-img-box col-md-6">
+                                <a href="#"><img alt="" src="{{ asset('uploads/image/' ~ product.imageUrl)}}" alt=""></a>
+
+
+
+                                    <div class="customNavigation">
+                                        <a class="btn prev"><i class="fa fa-caret-left"></i></a>
+                                        <a class="btn next"><i class="fa fa-caret-right"></i></a>
+                                    </div>
+
+                            </div>
+                            <div class="product-shop col-md-6">
+
+                                <div class="product-name">
+                                    <h1>{{ product.name }}</h1>
+                                </div>
+                                <div class="meta-box">
+                                    <div class="price-box">
+                                        <span class="special-price">{{ product.price }} DT</span>
+
+                                    </div>
+
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="short-description">
+                                    <span class="special-price">{{ product.description }}</span>
+                                </div>
+                                <div class="add-to-box">
+                                    {{ form_start(form,{'attr':{'novalidate':'novalidate'}}) }}
+
+                                    <div class="add-to-cart">
+                                        {{ form_row(form.quantity, { 'id': 'qty' }) }}
+
+                                        <span class="increase-qty" onclick="increaseQty('1')"><i class="fa fa-sort-up"></i></span>
+                                        <span class="decrease-qty" onclick="decreaseQty('1')"><i class="fa fa-sort-down"></i></span>
+                                    </div>
+
+                                    <button class="button btn-cart" title="Add to Cart" type="submit" >
+
+                                        <em class="fa-icon"><i class="fa fa-shopping-cart"></i></em>
+                                        <span>Add Cart</span>
+                                    </button>
+                                    <a class="link-wishlist"><i class="fa fa-heart"></i></a>
+                                    {{ form_end(form) }}
+
+                                </div>
+                                <div class="cat-list">
+                                    <label>Categories</label><span>:</span>
+                                    <ul>
+                                        <li><a href="#">{{ product.category }}</a></li>
+
+                                    </ul>
+                                </div>
+                                <div class="tags-list">
+                                    <label>Tags</label><span>:</span>
+                                    <ul>
+                                        <li><a href="#">Fitness</a></li>
+                                        <li><a href="#">Lorem</a></li>
+                                    </ul>
+                                </div>
+                                <div class="social-icon">
+                                    <ul>
+                                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-youtube"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                                            <div class="actions">
+                                                <ul>
+                                                    <li><a href="#"><i class="fa fa-info"></i></a></li>
+                                                    <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                                    <li><a href="#"><i class="fa fa-search"></i></a></li>
+                                                    <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <a class="arrows quickview" href="#quickview"><i class="fa fa-arrows"></i></a>
+                                </div>
+                            </div>
+
+
+
+                                            <div class="actions">
+                                                <ul>
+                                                    <li><a href="#"><i class="fa fa-info"></i></a></li>
+                                                    <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                                    <li><a href="#"><i class="fa fa-search"></i></a></li>
+                                                    <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <a class="arrows quickview" href="#quickview"><i class="fa fa-arrows"></i></a>
+                                </div>
+                            </div>
+
+                                            <div class="actions">
+                                                <ul>
+                                                    <li><a href="#"><i class="fa fa-info"></i></a></li>
+                                                    <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                                    <li><a href="#"><i class="fa fa-search"></i></a></li>
+                                                    <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <a class="arrows quickview" href="#quickview"><i class="fa fa-arrows"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="quickview" class="quickview-box container">
+                            <div class="row">
+                                <div class="quickview-body col-md-9">
+                                    <div class="product-essential">
+                                        <button type="button" class="quickview-close" onclick="$.fn.custombox('close');">
+                                            <i class="fa fa-times"></i>
+                                        </button>
+
+
+
+                                                <div class="rating-box">
+                                                    <div class="rating">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="add-to-box">
+                                                <div class="add-to-cart">
+                                                    <input type="text" class="input-text qty-2" title="Qty" value="1" maxlength="12" id="qty-box" name="qty">
+                                                    <span class="increase-qty" onclick="increaseQty('2')"><i class="fa fa-sort-up"></i></span>
+                                                    <span class="decrease-qty" onclick="decreaseQty('2')"><i class="fa fa-sort-down"></i></span>
+                                                </div>
+                                                <button class="button btn-cart" title="Add to Cart" type="button">
+                                                    <em class="fa-icon"><i class="fa fa-shopping-cart"></i></em>
+                                                    <span>Add Cart</span>
+                                                </button>
+                                                <a class="link-wishlist"><i class="fa fa-heart"></i></a>
+                                            </div>
+                                            <div class="cat-list">
+                                                <label>Categories</label><span>:</span>
+                                                <ul>
+                                                    <li><a href="#">Dress,</a></li>
+                                                    <li><a href="#">Lorem</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="tags-list">
+                                                <label>Tags</label><span>:</span>
+                                                <ul>
+                                                    <li><a href="#">Fitness</a></li>
+                                                    <li><a href="#">Lorem</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="social-icon">
+                                                <ul>
+                                                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                                    <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                                                    <li><a href="#"><i class="fa fa-youtube"></i></a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                                </div>
+                            </li>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</section>
+
+<footer class="page-footer page-footer-product">
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-sm-4 col-xs-12 infomation">
+
+                    <div class="social_icon">
+                        <a href="#"><i class="fa fa-facebook"></i></a>
+                        <a href="#"><i class="fa fa-twitter"></i></a>
+                        <a href="#"><i class="fa fa-google-plus"></i></a>
+                        <a href="#"><i class="fa fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-12 location">
+                    <div class="footer-title">
+                        <h4>Our location</h4>
+                    </div>
+                    <div class="address">
+                        <p>Room 1214&nbsp; #187 Tay Son Building, Dong Da Distr<br>Ha Noi, Vietnam<br>Phone : +84 4 22414757<br>Email : <a href="https://html.sdemo.site/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="9ef7f0e9ffe8fbeaf6fbf3fbeddef9f3fff7f2b0fdf1f3">[email&#160;protected]</a></p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-12 send-mail">
+                    <div class="footer-title">
+                        <h4>Keep in touch</h4>
+                    </div>
+                    <form name="" method="post" id="send-mail">
+                        <div class="info">Lorem ipsum dolor sit amet, consectetur adi sollicitud ante tellus ornare mi, et mollis</div>
+                        <div class="email">
+                            <input type="text" title="E-mail" name="user[email]" class="inputbox" placeholder="Your email">
+                            <button class="button" title="Submit" type="submit"><i class="fa fa-arrow-right"></i></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</footer>
+
+
+<div id="copyright">
+    <div class="container">
+        <div class="back-to-top"><a title="BACK_TO_TOP" href="#top"><i class="fa fa-chevron-up"></i></a></div>
+        <div class="clrDiv"></div>
+    </div>
+</div>
+
+</div>
+
+
+</script>
+</body>
+
+<!-- Mirrored from html.sdemo.site/athlete/product-detail.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 03 Apr 2022 01:23:15 GMT -->
+</html>
+
+
+
+
+
+
+
+{% endblock %}
+{% block javascripts %}
+
+    <script>
+        function increaseQty(x){
+            document.getElementById('qty').value ++;
+        }
+        function decreaseQty(x){
+            if(document.getElementById('qty').value > 0){
+                document.getElementById('qty').value --;
+
+            }
+            return
+        }
+    </script>
+
+
+{% endblock %}

@@ -1,0 +1,100 @@
+
+{% extends 'back.base.html.twig' %}
+
+{% block title %}Plannings{% endblock %}
+ {% block stylesheets %}
+     {{ parent() }}
+
+     <link rel="stylesheet" href={{ asset("front/assets/css/style.css") }} type="text/css">
+     <link rel="stylesheet" href={{ asset("front/assets/css/bootstrap.css") }} type="text/css">
+     <link rel="stylesheet" href={{ asset("front/assets/css/font-awesome.css") }} type="text/css">
+     <!--[if !IE 9]><!-->
+     <link rel="stylesheet" href={{ asset("front/assets/css/effect.css") }} type="text/css">
+     <link rel="stylesheet" href={{ asset("front/assets/css/animation.css") }} type="text/css">
+     <!--<![endif]-->
+     <link rel="stylesheet" href={{ asset("front/assets/css/masterslider.css") }} type="text/css">
+     <link rel="stylesheet" href={{ asset("front/assets/css/ms-fullscreen.css") }} type="text/css">
+     <link rel="stylesheet" type="text/css" media="all" href={{ asset("front/assets/css/owl.carousel.css") }}>
+     <link rel="stylesheet" type="text/css" media="all" href={{ asset("front/assets/css/owl.transitions.css") }}>
+     <link rel="stylesheet" href={{ asset("front/assets/css/color.css") }} type="text/css">
+     <link rel="stylesheet" type="text/css" href={{ asset('front/assets/styles/exercices.css') }}>
+
+ {% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script data-cfasync="false" src={{ asset("front/assets/cloudflare-static/email-decode.min.js") }}></script><script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
+    <script type="text/javascript" src={{ asset("front/assets/js/jquery-2.1.0.min.js") }}></script>
+    <script type="text/javascript" src={{ asset("front/assets/js/bootstrap.min.js") }}></script>
+    <script type="text/javascript" src={{ asset("front/assets/js/jquery.easing.1.3.js") }}></script>
+    <script type="text/javascript" src={{ asset("front/assets/js/parallax/jquery.parallax-1.1.3.js") }}></script>
+    <script type="text/javascript" src={{ asset("front/assets/js/parallax/jquery.transform2d.js") }}></script>
+    <script type="text/javascript" src={{ asset("front/assets/js/parallax/script.js") }}></script>
+    <script type="text/javascript" src={{ asset("front/assets/js/parallax/parallax.js") }}></script>
+    <script type="text/javascript" src={{ asset("front/assets/js/masterslider.min.js") }}></script>
+    <script type="text/javascript" src={{ asset("front/assets/js/banner.js") }}></script>
+    <script type="text/javascript" src={{ asset("front/assets/js/home.map.js") }}></script>
+    <script type="text/javascript" src={{ asset("front/assets/js/waypoints.js") }}></script>
+    <script type="text/javascript" src={{ asset("front/assets/js/template.js") }}></script>
+    <script type="text/javascript" src={{ asset("front/assets/js/dropdown.js") }}></script>
+    <script type="text/javascript" src={{ asset("front/assets/js/owl.carousel.min.js") }}></script>
+    <script type="text/javascript" src={{ asset("front/assets/js/theme.js") }}></script>
+    <script type="text/javascript" src={{ asset("front/assets/js/classie.js") }}></script>
+    <script type="text/javascript" src={{ asset("front/assets/js/main.js") }}></script>
+    <script type="text/javascript">
+        function changeImage(a, idEx) {
+            document.getElementById('img-id' + idEx).src = a;
+        }
+    </script>
+{% endblock %}
+{% block body %}
+    <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+        <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur"
+             navbar-scroll="true">
+            <div class="container-fluid py-1 px-3">
+                <div class="page-content">
+                    <div class="main-content">
+                        <div class="container">
+                            <div class="row">
+                                <section id="our-trainers" class="our-trainers">
+                                    {% for planning in plannings %}
+                                        <div class="our-trainer-box col-md-4 col-sm-6 col-xs-12">
+                                            <div class="product-image-wrapper">
+                                                <div class="product-content">
+
+                                                    <div class="info-products">
+                                                        <div class="img-trainers">
+                                                            <img src={{ asset("front/assets/images/boxing-icon-1.png") }} alt=""/>
+                                                        </div>
+                                                        <div class="product-name">
+                                                            <a href="trainer-profile.html">{{ planning.id }}</a>
+                                                            <div class="product-bottom"></div>
+                                                        </div>
+
+                                                        <div class="product-info">
+                                                            <p>{{ planning.date ? planning.date|date('Y-m-d') : '' }} </p>
+                                                        </div>
+
+
+                                                        <a href="{{ path('planning_show', {'id': planning.id}) }}">show</a>
+                                                        <a href="{{ path('planning_edit', {'id': planning.id}) }}">edit</a>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </section>
+                            </div>
+                        <button style="background-color: orange">  <a href="{{ path('planning_new') }}">Create new</a> </button>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </nav>
+    </main>
+
+
+{% endblock %}
+

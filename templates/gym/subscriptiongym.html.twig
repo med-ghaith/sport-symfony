@@ -1,0 +1,34 @@
+
+{% block body %}
+<section class="collection">
+
+<div class="team-content">
+<div class="masonry-lagar">
+<div class="title-match">
+<h3>Abonner</h3>
+</div>
+<div class="league-table results-match">
+<ul class="league-1 league-title">
+<li class="with-50">Member</li>
+<li class="with-50">start date</li>
+<li class="with-50">validity</li>
+<li class="with-50"></li>
+</ul>
+{% for sub in subs %}
+<ul class="league-2 ">
+<li class="with-50">{{sub.member.firstName}} {{sub.member.lastName}}</li>
+<li class="with-50">{{sub.startDate| date("y-m-d")}}</li>
+<li class="with-50">{{sub.validity}}</li>
+<li class="with-50" title="Delete abonnement membre"><a href={{ path('subscription_delete', {'id': sub.id,'idgym':gym.id}) }}><i class="fa fa-trash-o" aria-hidden="true"></i></a></li>
+</ul>
+{% endfor %}
+<ul class="league-1 viewall-league">
+<li class="view-league">
+    {{ knp_pagination_render(subs) }}
+</li>
+</ul>
+</div>
+
+</section>
+    
+{% endblock %}

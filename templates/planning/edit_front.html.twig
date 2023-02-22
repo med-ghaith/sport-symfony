@@ -1,0 +1,10 @@
+{% extends 'front.base.html.twig' %}
+
+{% block body %}
+    <h1>Edit Planning</h1>
+
+    {{ include('planning/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <button style="background-color: orange"> <a href="{{ path('planning_index_front') }}">back to list</a></button>
+
+{% endblock %}

@@ -1,0 +1,239 @@
+{% extends 'front.base.html.twig' %}
+
+{% block title %}Messages{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href={{ asset('front/assets/css/messages-chat.css') }}>
+
+{% endblock %}
+
+
+{% block body %}
+    <section class="page-heading">
+        <div class="title-slide">
+            <div class="container">
+                <div class="banner-content slide-container">
+                    <div class="page-title">
+                        <h3>Messages</h3>
+                        <h3>{{ app.user.id }}</h3>
+                        {% for msg in app.flashes('success') %}
+                            <div class="alert alert-success">
+                                {{ msg }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="page-content">
+
+        <div class="breadcrumbs">
+            <div class="container">
+                <div class="wrapper">
+                    {#                    <div class="mod-container"> #}
+                    <div class="left">
+                        <div class="top">
+                            <input type="text" placeholder="Search"/>
+                            <a href="javascript:;" class="search"></a>
+                        </div>
+                        <ul class="people">
+                            {% for convUs in testc %}
+                                <a href="{{ path('load_user_messages', {'id':convUs.id} ) }}" class="jesus">
+                                    <li class="person" data-chat="person2">
+                                        <img src="{{ convUs.imgUrl }}" alt=""/>
+                                        <span id="firstNameR" class="name">{{ convUs.firstName }}</span>
+                                        <span class="preview">{{ convUs.lastMsgSent }}</span>
+                                    </li>
+                                </a>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="right">
+                        <div class="top"><span class="js-rev-name">To: <span id="firstNameT"
+                                                                             class="name">Dog Woofson</span></span>
+                        </div>
+                        <div id="scroll" class="chat" data-chat="person1">
+                            <div class="conversation-start">
+                                <span>Today, 6:48 AM</span>
+                            </div>
+                            <div id="chat-div">
+                                {% for msg in msgs %}
+                                    <div {% if(app.user.id == msg.idFirstUser) %} class="bubble me" {% else %} class="bubble you" {% endif %}>
+                                        {{ msg.content }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="write">
+                            <a href="javascript:;" class="write-link attach"></a>
+                            <input id="msg-text-field" type="text"/>
+                            <a href="javascript:;" class="write-link smiley"></a>
+                            <a href="{{ path('private_message_send', {'id':app.user.id}) }}"
+                               class="write-link send"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src={{ asset("front/assets/js/messages-chat.js") }}></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        let idSecondUser = 0;
+        let idUser = {{ app.user.id }};
+
+        function loadConv(event) {
+            event.preventDefault();
+
+            const url = this.href;
+            const chatDiv = document.getElementById("chat-div");
+
+            const myName = this.querySelector('span.name');
+            const toSpan = document.getElementById("firstNameT");
+            var arrayOfurlSplitted = url.split('/');
+            idSecondUser = arrayOfurlSplitted[arrayOfurlSplitted.length - 1];
+            console.log(idSecondUser);
+
+            axios.get(url).then(function (response) {
+                toSpan.textContent = myName.textContent;
+                chatDiv.innerHTML = "";
+                response.data.forEach(e => {
+                    if (idUser == e.idFirstUser) {
+                        var ndiv = document.createElement("div")
+                        ndiv.textContent = e.content
+                        ndiv.className = "bubble me"
+                        chatDiv.appendChild(ndiv);
+                    } else {
+                        var ndiv = document.createElement("div")
+                        ndiv.textContent = e.content
+                        ndiv.className = "bubble you"
+                        chatDiv.appendChild(ndiv);
+                    }
+                })
+            })
+        }
+
+        document.querySelectorAll("a.jesus").forEach(function (link) {
+            link.addEventListener('click', loadConv)
+        })
+    </script>
+    <script>
+        function sendMsg(event) {
+            event.preventDefault();
+            const url = this.href;
+            const chatDiv = document.getElementById("chat-div");
+            const elem = document.getElementById('msg-text-field').value;
+            var scrollDive = document.getElementById("scroll");
+
+            shouldScroll = scrollDive.scrollTop + scrollDive.clientHeight === scrollDive.scrollHeight;
+
+            var ndiv = document.createElement("div")
+
+            ndiv.textContent = elem
+            ndiv.className = "bubble me"
+
+            encodedMsg = idUser + '<START=OF=REQ>' + idSecondUser + '<START=OF=REQ>' + elem;
+            // Here append Only When value id receiver is my id
+
+            chatDiv.appendChild(ndiv);
+
+            conn.send(encodedMsg);
+
+            document.getElementById('msg-text-field').value = "";
+
+            axios.post(url, {
+                'idFirstUser': idUser,
+                'idSecondUser': idSecondUser,
+                'content': elem
+            }).then((resp) => {
+                console.log(resp);
+            })
+                .catch((error) => {
+                    if (error.response) {
+                        console.log(error.response.data); // => the response payload
+                    }
+                });
+
+            if (!shouldScroll) {
+                scrollDive.scrollTop = scrollDive.scrollHeight;
+            }
+
+            scrollDive.scrollTop = scrollDive.scrollHeight;
+        }
+
+        document.querySelectorAll("a.send").forEach(function (link) {
+            link.addEventListener('click', sendMsg)
+        })
+    </script>
+    <script>
+        // function subscribe(channel) {
+        //     conn.send(JSON.stringify({command: "subscribe", channel: channel}));
+        // }
+        //
+        // function sendMessage(msg) {
+        //     conn.send(JSON.stringify({command: "message", message: msg}));
+        // }
+
+        var conn = new WebSocket('ws://localhost:8080');
+        conn.onopen = function (e) {
+            console.log("Connection established!");
+        };
+
+        conn.onmessage = function (e) {
+
+            const chatDiv = document.getElementById("chat-div");
+            //const elem = document.getElementById('msg-text-field').value;
+
+            var ndiv = document.createElement("div")
+            var message = e.data;
+            const arr = message.split("<START=OF=REQ>");
+
+            if (arr[1] == idUser) {
+                const lastUrl = "{{ app.request.getSchemeAndHttpHost() }}" + "{{ path('messages_sent', {'id':app.user.id} ) }}";
+{#                {{ path('messages_sent' , {'id':app.user.id} ) }}#}
+                axios.post(lastUrl, {
+                    'msg': arr[2]
+                });
+
+                ndiv.textContent = arr[2];
+                ndiv.className = "bubble you"
+                chatDiv.appendChild(ndiv);
+            }
+        };
+    </script>
+{% endblock %}
+
+
+
+
+{# <h1>PrivateMessage index</h1> #}
+{# <a href="{{ path('private_message_new') }}">Create new</a> #}
+{# <table class="table"> #}
+{#    <thead> #}
+{#    <tr> #}
+{#        <th>Id</th> #}
+{#        <th>Content</th> #}
+{#        <th>CreatedAt</th> #}
+{#        <th>actions</th> #}
+{#    </tr> #}
+{#    </thead> #}
+{#    <tbody> #}
+{#    {% for private_message in private_messages %} #}
+{#        <tr> #}
+{#            <td>{{ private_message.id }}</td> #}
+{#            <td>{{ private_message.content }}</td> #}
+{#            <td>{{ private_message.createdAt ? private_message.createdAt | date('Y-m-d H:i:s') : '' }}</td> #}
+{#            <td> #}
+{#                <a href="{{ path('private_message_show', {'id': private_message.id}) }}">show</a> #}
+{#                <a href="{{ path('private_message_edit', {'id': private_message.id}) }}">edit</a> #}
+{#            </td> #}
+{#        </tr> #}
+{#    {% else %} #}
+{#        <tr> #}
+{#            <td colspan="4">no records found</td> #}
+{#        </tr> #}
+{#    {% endfor %} #}
+{#    </tbody> #}
+{# </table> #}

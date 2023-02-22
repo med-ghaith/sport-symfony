@@ -1,0 +1,41 @@
+{% extends 'front.base.html.twig' %}
+
+
+{% block body %}
+    <h1>Product</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ product.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ product.name }}</td>
+            </tr>
+            <tr>
+                <th>ImageUrl</th>
+                <td>{{ product.imageUrl }}</td>
+            </tr>
+            <tr>
+                <th>Price</th>
+                <td>{{ product.price }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ product.description }}</td>
+            </tr>
+            <tr>
+                <th>Category</th>
+                <td>{{ product.category }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('listproduct') }}">back to list</a>
+
+
+
+
+{% endblock %}

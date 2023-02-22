@@ -1,0 +1,146 @@
+{% extends 'front.base.html.twig' %}
+{% block body %}
+
+    <section class="page page-product">
+        <section class="page-heading">
+            <div class="title-slide">
+                <div class="container">
+                    <div class="banner-content">
+                        <div class="page-title">
+                            <h3>product listing</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="page-content">
+
+            <div class="breadcrumbs">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-9">
+                            <ul>
+                                <li class="home"><a href="#"><i class="fa fa-home"></i> Home</a></li>
+                                <li><span>//</span></li>
+                                <li class="category-2"><a href="#">Listing row</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-list-row">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-9">
+                            <div class="toolbar">
+                                <p class="amount">
+                                    <strong>SHOWING ALL {{products|length}} RESULTS</strong>
+                                </p>
+                                <div class="sorter">
+
+                                    <div class="sort-by">
+                                        <select onchange="setLocation(this.value)">
+                                            <option selected="selected" value="">Default sorting</option>
+
+                                            <option value="">Name</option>
+                                            <option value="">Price</option>
+                                            <option value="">desc</option>
+                                        </select>
+                                    </div>
+                                    <p class="view-mode">
+                                        <a class="grid" title="Grid" href={{path('listproduct_row')}}><i class="fa fa-th-large"></i></a>
+                                        <strong class="list-active" title="List"><i class="fa fa-th-list"></i></strong>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="row" id="myTable">
+                                {% for product in products %}
+                                    <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <div class="product-image-wrapper">
+                                            <div class="product-content">
+                                                <div class="product-image">
+                                                    <a href="#"><img  href="{{ path('product_show', {'id': product.id}) }}" alt="" src="{{ asset('uploads/image/' ~ product.imageUrl)}}" alt=""></a>
+                                                </div>
+                                                <div class="info-products">
+                                                    <div class="product-name">
+                                                        <a href="product-detail.html">{{ product.name }}</a>
+                                                        <div class="product-bottom"></div>
+                                                    </div>
+                                                    <div class="price-box">
+                                                        <span class="special-price">{{ product.price }} DT</span>
+                                                    </div>
+
+                                                    <div class="actions">
+                                                        <ul>
+                                                            <li><a href="#"><i class="fa fa-info"></i></a></li>
+                                                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                                            <li><a href="#"><i class="fa fa-search"></i></a></li>
+                                                            <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <a class="arrows quickview" href="{{ path('product_show', {'id': product.id}) }}"><i class="fa fa-arrows"></i></a>
+
+                                        </div>
+
+
+                                    </div>
+                                    <script >
+                                        $(document).ready(function(){
+                                            $("#myInput").on("keyup", function() {
+                                                var value = $(this).val().toLowerCase();
+                                                //console.log(value);
+                                                $("#myTable .product-content").filter(function() {
+                                                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                                                });
+                                            });
+                                        });
+                                    </script>
+                                {% endfor %}
+
+                            </div>
+                            <div style="font-size: 20px; text-align: center">
+                                {{ knp_pagination_render(products) }}
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="pages">
+
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="product-filter">
+                                <div class="widget widget-price-filter">
+                                    <form name="" method="post" id="send-search">
+                                        <div class="email">
+                                            <input style="background-color: #0b0c19" type="text" title="Search" name="search" class="custom-file-input" placeholder="Search" id="myInput">
+                                            <button class="button" title="Submit" type="submit"><i class="fa fa-search" ></i></button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="product-categories">
+                                <h3 class="title">product categories</h3>
+                                <ul>
+                                    <li><a href="#">halters</a></li>
+
+                                    <li><a href="#">proteins</a></li>
+
+                                </ul>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+{% endblock %}

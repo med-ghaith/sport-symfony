@@ -1,0 +1,572 @@
+{% extends 'front.base.html.twig' %}
+
+{% block title %}Coach bot{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href={{ asset('front/assets/css/chat-bot.css') }}>
+
+{% endblock %}
+
+
+{% block body %}
+    <section class="page-heading">
+        <div class="title-slide">
+            <div class="container">
+                <div class="banner-content slide-container">
+                    <div class="page-title">
+                        <h3>Welcome to chat bot</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="page-content">
+        <div class="container">
+            <section class="timetable">
+                <div class="title-page title-time">
+                    <div class="col-md-4">
+                        <img src="{{ asset("front/assets/images/bot.png") }}">
+                        <h3>I'm coach bot</h3>
+                        <p>You can start by saying Hi in Arabic/French or english.</p>
+                    </div>
+                </div>
+                <div>
+                    <div class="breadcrumbs">
+                        <div class="container">
+                            <div class="wrapper">
+                                <div class="right">
+                                    <div id="scroll" class="chat" data-chat="person1">
+                                        <div id="chat-div">
+
+                                        </div>
+                                    </div>
+                                    <div class="write">
+                                        <a href="javascript:;" class="write-link attach"></a>
+                                        <input id="msg-text-field" type="text"/>
+                                        <a href="javascript:;" class="write-link smiley"></a>
+                                        <a href="javascript:;" class="write-link send"></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <script type="text/javascript" src={{ asset("front/assets/js/messages-chat.js") }}></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        function saySomething(){
+
+        }
+    </script>
+    <script>
+
+        let salutationDone = false;
+        let askedAboutWeight = false;
+        let askedAboutHeight = false;
+        let endedEquip = false;
+        let endedMuscle = false;
+        let weight = -1;
+        let height = -1;
+        let imc = -1;
+        let timesAskedAboutEquipment = 0;
+        let timesAskedAboutMuscle = 0;
+        let positiveAnswerCount = 0;
+
+        let equipments = [];
+        let muscles = [];
+        let messages = [];
+
+        var msg = new SpeechSynthesisUtterance();
+        var voices = window.speechSynthesis.getVoices();
+        msg.voice = voices[6];
+        msg.volume = 1; // From 0 to 1
+        msg.rate = 0.6; // From 0.1 to 10
+        msg.pitch = 0.3; // From 0 to 2
+        msg.lang = 'en';
+        var dkhal = false;
+        // window.onload = function() {
+        //     console.log("ejaaw")
+        //
+        // };
+
+        function sendMsg(event) {
+            event.preventDefault();
+
+            if ( dkhal == false){
+                msg.text = "Hi there, I am coach bot";
+                speechSynthesis.speak(msg);
+
+
+                msg.text = "I will help you with your diet";
+                speechSynthesis.speak(msg);
+                dkhal = true;
+            }
+
+
+
+            let salutation_json = $.parseJSON('{{ salutation_json | raw }}')
+            // console.log(salutation_json.SALUTATION);
+
+            const url = this.href;
+            const elem = document.getElementById('msg-text-field').value;
+            var scrollDive = document.getElementById("scroll");
+
+            shouldScroll = scrollDive.scrollTop + scrollDive.clientHeight === scrollDive.scrollHeight;
+
+
+            if (!(elem.trim().length == 0)) {
+                loadRightMsg(elem);
+                if (!salutationDone) {
+                    handleSalutation(elem);
+                } else {
+                    if (extractPositiveAnswer(elem) && positiveAnswerCount == 1) {// When he says yes
+                        askAboutWeight();
+                    } else {
+                        if (weight < 0) {
+                            handleWeightQuest(elem);
+                            if (weight > 0) {
+                                askAboutHeight();
+                            }
+                        } else if (height < 0) {
+                            handleHeightQuest(elem);
+                            if (height > 0) {
+                                handleImcResp();
+                                if (timesAskedAboutEquipment == 0) {
+                                    askAboutEquipments();
+                                }
+                            }
+                        } else if (endedEquip == false) {
+                            if (timesAskedAboutEquipment < 4) {
+                                if (extractPositiveOrNegativeResp(elem) == 0) {
+                                    endedEquip = true;
+                                    if (timesAskedAboutMuscle == 0) {
+                                        askAboutMuscle();
+                                    }
+                                } else {
+                                    handleEquipmentResp(elem);
+                                }
+                            }
+
+                        } else if (endedMuscle == false) {
+                            if (timesAskedAboutMuscle < 4) {
+                                if (extractPositiveOrNegativeResp(elem) == 0) {
+                                    endedMuscle = true;
+                                    loadLeftMsg("kamalnaaaaaaaaa");
+                                    goToPage();
+                                } else {
+                                    handleMuscleResp(elem);
+                                }
+                            }
+
+                        } else {
+                            loadLeftMsg("ouf hamdoullah kamalt ..");
+                            goToPage();
+                        }
+                    }
+                }
+
+                if (!shouldScroll) {
+                    scrollDive.scrollTop = scrollDive.scrollHeight;
+                }
+
+                document.getElementById('msg-text-field').value = "";
+
+                scrollDive.scrollTop = scrollDive.scrollHeight;
+            }
+        }
+
+        function goToPage() {
+            url = "{{ app.request.getSchemeAndHttpHost() }}"+"{{ path('exercice_generated') }}";
+            // var httpsUrl = url.slice(0, 4) + "s" + url.slice(4);
+            // console.log(httpsUrl)
+            if(equipments[0] in window){
+                equipments[0] = null;
+            }
+            console.log(equipments[0]);
+            if(equipments[1] in window){
+                equipments[1] = null;
+            }
+            console.log(equipments[1]);
+            if(equipments[2] in window){
+                equipments[2] = null;
+            }
+            console.log(equipments[2]);
+            const params = new URLSearchParams({
+                equip: equipments[0],
+                equip1: equipments[1],
+                equip2: equipments[2]
+            }).toString();
+            var httpsUrl = url + "?" + params;
+            httpsUrl = httpsUrl.replaceAll(" ","%");
+            // axios.post(httpsUrl//, null, params
+            //
+            // ).then((resp) => {
+            //     console.log(resp.data);
+            // }).catch((error) => {
+            //     if (error.response) {
+            //         console.log(error.response.data); // => the response payload
+            //     }
+            // });
+            // console.log(httpsUrl);
+             window.location.href = httpsUrl;
+        }
+
+        function askAboutHeight() {
+            if (askedAboutHeight) {
+                loadLeftMsg("Bon n3awed nes2lk bel anglais belek fhemtnich");
+                loadLeftMsg("How tall are you?");
+                msg.text = "How tall are you";
+                speechSynthesis.speak(msg);
+                loadLeftMsg("taamel mzeya bel cm :p");
+            } else {
+                loadLeftMsg("Sou2el théni sehel zeda");
+                loadLeftMsg("9adeh toulek?");
+                askedAboutHeight = true;
+            }
+        }
+
+        function askAboutWeight() {
+            if (askedAboutWeight) {
+                loadLeftMsg("Bon n3awed nes2lk bel anglais belek fhemtnich");
+                loadLeftMsg("How many kilos do you weigh?");
+                msg.lang = "en"
+                msg.voice =voices[6];
+                msg.text = "How many kilos do you weigh?";
+                speechSynthesis.speak(msg);
+                loadLeftMsg("taamel mzeya bel kg :p");
+            } else {
+                loadLeftMsg("Bon nebdew bsou2el seheel");
+                loadLeftMsg("9adeh touzen ?");
+                msg.lang = "ar"
+                msg.voice =voices[2];
+                msg.text = "كم وزنك";
+                speechSynthesis.speak(msg);
+                askedAboutWeight = true;
+            }
+        }
+
+        /**
+         * return:
+         * * -1 if we can't extract information from the message
+         * * -2 if the weight exceeded the norm
+         * * -3 if the weight is less than the norm
+         * * the weight if everything went well
+         * */
+        function extractWeight(msg) {
+            wazn = -1;
+            let wazn_json = $.parseJSON('{{ wazn_json | raw }}');
+            let weight = wazn_json.WAZN;
+
+            msg = msg.replace(/[^0-9]/g, '');
+            if (msg == "") {
+                return wazn;
+            }
+            finalMsg = parseInt(msg);
+            console.log(finalMsg);
+            if (weight.includes(finalMsg)) {
+                return parseInt(finalMsg);
+            } else if (parseInt(finalMsg) > Math.max(...weight)) {
+                return -2;
+            } else if (parseInt(finalMsg) < Math.min(...weight)) {
+                return -3;
+            }
+            return wazn;
+        }
+
+        /**
+         * return:
+         * * -1 if we can't extract information from the message
+         * * -2 if the weight exceeded the norm
+         * * -3 if the weight is less than the norm
+         * * the weight if everything went well
+         * */
+        function extractHeight(msg) {
+            toul = -1;
+            let toul_json = $.parseJSON('{{ toul_json | raw }}');
+            let height = toul_json.TOUL;
+
+            msg = msg.replace(/[^0-9]/g, '');
+            if (msg == "") {
+                return toul;
+            }
+            finalMsg = parseInt(msg);
+            console.log(finalMsg);
+            if (height.includes(finalMsg)) {
+                return parseInt(finalMsg);
+            } else if (parseInt(finalMsg) > Math.max(...height)) {
+                return -2;
+            } else if (parseInt(finalMsg) < Math.min(...height)) {
+                return -3;
+            }
+            return toul;
+        }
+
+        function handleWeightQuest(msg) {
+            youzen = extractWeight(msg);
+            if (youzen == -3) {
+                loadLeftMsg("3andkom maje3a w 3andkom internet ?");
+                askAboutWeight();
+            } else if (youzen == -2) {
+                loadLeftMsg("a7kiw m3aya bel we7ed bel we7ed taamlou mzeya");
+                askAboutWeight();
+            } else if (youzen == -1) {
+                loadLeftMsg("Sorry fhemtekch ch9olt");
+                askAboutWeight();
+            } else {
+                loadLeftMsg("niice");
+                weight = extractWeight(msg);
+            }
+        }
+
+        function handleHeightQuest(msg) {
+
+            toulou = extractHeight(msg);
+            if (toulou == -3) {
+                loadLeftMsg("being too short mch 3yb ama mch lahal darja");
+                askAboutHeight();
+            } else if (toulou == -2) {
+                loadLeftMsg("Salafni chwaya xD");
+                askAboutHeight();
+            } else if (toulou == -1) {
+                loadLeftMsg("Sorry fhemtekch ch9olt");
+                askAboutHeight();
+            } else {
+                loadLeftMsg("Mrigueel");
+                height = extractHeight(msg);
+            }
+        }
+
+        function handleImcResp() {
+            if (weight > 0 && height > 0) {
+                loadLeftMsg("Bon bech ne7sbou el IMC mte3ek ");
+                loadLeftMsg("donc touzen " + weight + "kg w toulek " + height + " cm");
+                imc = weight / Math.pow(height / 100, 2);
+                loadLeftMsg("donc el imc mte3ek iji: " + imc);
+                if (imc < 18.5) {
+                    loadLeftMsg("Vous avez une insuffisance pondérale (maigreur)");
+                } else if (imc >= 18.5 && imc <= 25) {
+                    loadLeftMsg("vous avez une corpulence normale");
+                } else if (imc > 25 && imc < 30) {
+                    loadLeftMsg("vous etes en surpoid nous vous conseillant de suivre notre régime");
+                } else if (imc >= 30 && imc < 35) {
+                    loadLeftMsg("vous avez une obésité sévère, on vas vous proposer un programme adéquoi");
+                } else if (imc > 40) {
+                    loadLeftMsg("vous avez une obésité morbide ou massive");
+                }
+            }
+        }
+
+        function askAboutEquipments() {
+            if (timesAskedAboutEquipment == 0) {
+                loadLeftMsg("Beh taw net3adew lel rasmi");
+                loadLeftMsg("bech naatik liste mtaa des equipement wenti 9oli ( bel ka3ba bel ka3ba ) ch3andek fedar w chnowa tnejem testaamel");
+                let equip_base_json = $.parseJSON('{{ equip_base_json | raw }}');
+                let equipment = equip_base_json['EQUIPMENT-BASE'];
+                for (const equip of equipment) {
+                    loadLeftMsg(equip);
+                }
+            } else if (timesAskedAboutEquipment < 4) {
+                loadLeftMsg("aandek 7aja okhra ?");
+            } else {
+                loadLeftMsg("yeziha");
+            }
+            timesAskedAboutEquipment++;
+        }
+
+        function handleEquipmentResp(msg) {
+
+            if (timesAskedAboutEquipment == 0) {
+                askAboutEquipments();
+            }
+            if (extractEquipment(msg) == null) {
+                loadLeftMsg("Sorry fhemtech chneya 9olt");
+                loadLeftMsg("Aatini des equipments mel liste eli lfou9");
+            } else {
+                equipment = extractEquipment(msg);
+                loadLeftMsg("donc aandek " + equipment);
+                equipments.push(equipment);
+                askAboutEquipments();
+            }
+        }
+
+        /**
+         * To upgrade later
+         * for now it returns the equipment if it finds it
+         * null if not
+         * */
+        function extractEquipment(msg) {
+            let equipment_json = $.parseJSON('{{ equipment_json | raw }}');
+            let equipment = equipment_json['EQUIPMENT'];
+            finalMsg1 = msg.toLowerCase();
+            for (i = 0; i < equipment.length; i++) {
+                if (equipment[i].toLowerCase().includes(msg.toLowerCase())) {// && msg.length > 2) {
+                    console.log("did you mean " + equipment[i])
+                    return equipment[i];
+                }
+            }
+            return null;
+        }
+
+        function loadRightMsg(msg) {
+            const chatDiv = document.getElementById("chat-div");
+
+            var ndiv = document.createElement("div")
+
+            ndiv.textContent = msg
+            ndiv.className = "bubble me"
+
+            chatDiv.appendChild(ndiv);
+        }
+
+
+        function loadLeftMsg(msg) {
+            const chatDiv = document.getElementById("chat-div");
+
+            var ndiv = document.createElement("div")
+
+            ndiv.textContent = msg
+            ndiv.className = "bubble you"
+
+            chatDiv.appendChild(ndiv);
+        }
+
+        /*
+        * returns true if it is a salutation msg
+        * false if not
+        * */
+        function extractSalutation(msg) {
+            let salutation_json = $.parseJSON('{{ salutation_json | raw }}')
+            for (i = 0; i < salutation_json.SALUTATION.length; i++) {
+                if (salutation_json.SALUTATION[i].toLowerCase().includes(msg.toLowerCase()) && msg.length > 2) {
+                    console.log("did you mean " + salutation_json.SALUTATION[i])
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /*
+        * returns true if it is a positive answer
+        * false if not
+        * */
+        function extractPositiveAnswer(msg) {
+            let positive_json = $.parseJSON('{{ positive_json | raw }}')
+            for (i = 0; i < positive_json["POSITIVE-ANSWER"].length; i++) {
+                if (positive_json["POSITIVE-ANSWER"][i].toLowerCase().includes(msg.toLowerCase())) {
+                    console.log("did you mean " + positive_json["POSITIVE-ANSWER"][i])
+                    positiveAnswerCount++;
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /**
+         * return:
+         * 0 if the answer is no
+         * 1 if the answer is yes
+         * -1 else
+         * */
+        function extractPositiveOrNegativeResp(msg) {
+            let yes = $.parseJSON('{{ positive_json | raw }}')
+            let yes_ar = yes['POSITIVE-ANSWER'];
+            let no = $.parseJSON('{{ negative_json | raw }}')
+            let no_ar = no['NEGATIVE-ANSWER'];
+            if (yes_ar.includes(msg)) {
+                return 1;
+            }
+            if (no_ar.includes(msg)) {
+                return 0;
+            }
+            return -1;
+        }
+
+        function askAboutMuscle() {
+            if (timesAskedAboutMuscle == 0) {
+                loadLeftMsg("Beh juste sou2el lekher w nkamlou");
+                loadLeftMsg("bech naatik liste mtaa des muscles wenti 9oli ( bel ka3ba bel ka3ba ) chnowa t7eb tekhdem");
+                let muscles = {{ muscles|json_encode()|raw }};
+                console.log(muscles)
+                for (const muscle of muscles) {
+                    loadLeftMsg(muscle['name'])
+                }
+            } else if (timesAskedAboutMuscle < 4) {
+                loadLeftMsg("fama muscle ekhor ?");
+            } else {
+                loadLeftMsg("yeziha");
+            }
+            timesAskedAboutMuscle++;
+        }
+
+        function handleMuscleResp(msg) {
+
+            if (timesAskedAboutMuscle == 0) {
+                askAboutMuscle();
+            }
+            if (extractMuscle(msg) == null) {
+                loadLeftMsg("Sorry fhemtech chneya 9olt");
+                loadLeftMsg("Aawed aatini muscle mel liste eli lfou9");
+            } else {
+                muscle = extractMuscle(msg);
+                loadLeftMsg("donc tu veux cibler " + muscle);
+                muscles.push(muscle);
+                askAboutMuscle();
+            }
+        }
+
+        function extractMuscle(msg) {
+            let muscles = {{ muscles|json_encode()|raw }};
+            finalMsg1 = msg.toLowerCase();
+            for (i = 0; i < muscles.length; i++) {
+                if (muscles[i]['name'].toLowerCase().includes(msg.toLowerCase())) {// && msg.length > 2) {
+                    console.log("did you mean " + muscles[i]['name'])
+                    return muscles[i]['name'];
+                }
+            }
+            return null;
+        }
+
+        function positiveJson(msg) {
+            console.log(extractPositiveAnswer(msg));
+        }
+
+        /*
+        * handles the salutation by saluting if the msg is a salutation tells him to retry if not
+        * */
+        async function handleSalutation(msg) {
+            let salutation_json = $.parseJSON('{{ salutation_json | raw }}')
+            let salutation_array = salutation_json.SALUTATION;
+            if (extractSalutation(msg)) {
+                // get a random response from the json array
+                let resp = salutation_array[Math.floor(Math.random() * salutation_array.length)];
+                loadLeftMsg(resp);
+                await delay(1000);
+                setTimeout(loadLeftMsg("Bon kima taaref ena coach bot, el coach eli bech n3awnek fel entrainement mte3ek"), 1000);
+                await delay(1000);
+                loadLeftMsg("nes2lk quelques question wenti jewebnii");
+                loadLeftMsg("Kenek mwefa9 just say Ok");
+                salutationDone = true;
+            } else {
+                loadLeftMsg("L7a9 naarach ken nejmou ne3tabrouk 9olt salem ama it's okeey");
+                loadLeftMsg("Bech nes2lk quelques question wenti jewebnii");
+                loadLeftMsg("Kenek mwefa9 just say Ok");
+                salutationDone = true;
+            }
+        }
+
+        function delay(milliseconds) {
+            return new Promise(resolve => {
+                setTimeout(resolve, milliseconds);
+            });
+        }
+
+        document.querySelectorAll("a.send").forEach(function (link) {
+            link.addEventListener('click', sendMsg)
+        })
+
+    </script>
+{% endblock %}

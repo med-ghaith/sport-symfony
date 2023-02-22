@@ -1,0 +1,62 @@
+{% extends 'back.base.html.twig' %}
+
+{% use "bootstrap_4_layout.html.twig" %}
+
+{% block body %}
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <!-- left column -->
+          <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Update Response</h3>
+              </div>
+              <!-- /.card-header -->
+              
+
+
+              <!-- form start -->
+        
+                {{ form_start(formA,{'attr': {'novalidate': 'novalidate'}} ) }}
+
+                <div class="card-body">
+                  
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Object</label>
+                   {{ form_widget(formA.object) }} 
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Response </label>
+                    {{ form_widget(formA.content) }}
+                    {{ form_errors(formA.content) }}
+                  </div>
+                </div>
+                <!-- /.card-body -->
+
+                <div class="card-footer">
+                {{ form_widget(formA.update,{'attr':{ "class":"btn btn-danger " }}) }}
+
+                </div>
+             {{ form_end(formA) }}
+              
+            </div>
+            <!-- /.card -->
+
+          
+
+          </div>
+
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+{% endblock %}
